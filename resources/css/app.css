@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=League+Spartan:wght@100..900&family=Mohave:ital,wght@0,300..700;1,300..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+* {
+    font-family: "Inter", sans-serif;
+}
+
+.title {
+    @apply font-Mohave font-bold text-4xl uppercase;
+}
+
+.navlink-user {
+    @apply block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:underline;
+}
+
+.img-style {
+    @apply hover:scale-105 transition ease-in-out duration-300 object-cover w-full h-full;
+}
+
+.gradient-ornament {
+    @apply before:absolute before:before:absolute before:bg-gradient-to-t from-[#030303e0] before:bottom-0 before:left-0 before:right-0 before:h-36 before:z-10;
+}
+
+.info-title {
+    @apply absolute bottom-10 text-center left-0 right-0 z-20 font-Mohave font-semibold text-lg;
+}
+
+.input-styles {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+
+.button-styles {
+    @apply bg-black text-white w-full py-3 px-7 hover:bg-white hover:text-black border border-black mt-8;
+}
+
+.brand-title {
+    @apply font-LeagueSpartan font-extrabold text-2xl;
+}
