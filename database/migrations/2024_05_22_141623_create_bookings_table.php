@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->date('date');
             $table->time('time');
+            $table->boolean('isConfirmed')->nullable();
             $table->text('place');
             $table->timestamps();
         });

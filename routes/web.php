@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\admin;
+use App\Http\Middleware\auth;
+use App\Http\Middleware\guest;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Route;
 
-
+// Route General
 Route::get('/', function () {
     return view('home', ['title' => 'Beranda']);
 });
@@ -17,47 +22,42 @@ Route::get('/booking', function() {
     
     $result = null;
 
-    if(Auth::check()){
+    if(auth()->check()){
         $result = Booking::where('user_id', auth()->user()->id)->get();
     }
     return view('booking', ['title' => 'Booking', 'books' => $result]);
 });
 
+
+// Route Users
 Route::controller(UserController::class)->group(function () {
     // login
-    Route::get("/login",'login');
-    Route::post("/login",'auth');
+    Route::get("/login",'login')->middleware(auth::class);
+    Route::post("/login",'auth')->middleware(auth::class);;
     
     // register
-    Route::get("/register",'register');
-    Route::post('/register', 'store');
+    Route::get("/register",'register')->middleware(auth::class);
+    Route::post('/register', 'store')->middleware(auth::class);;
     
     // edit
-    Route::get('/user/{user}', 'edit');
-    Route::post('/personal-data-edit', 'personal_data_edit');
-    Route::post('/password-edit', 'password_edit');
+    Route::get('/user/{user}', 'edit')->middleware(guest::class);
+    Route::patch('/personal-data-edit', 'personal_data_edit')->middleware(guest::class);
+    Route::patch('/password-edit', 'password_edit')->middleware(guest::class);
     
     // logout
     Route::post('/logout', 'logout');
 });
 
+// Booking routes
+Route::post("/booking", [BookingController::class, 'create']);
 
-Route::post("/booking", function() {
+Route::delete('/booking', [BookingController::class, 'delete_by_user']);
 
-    request()->validate([
-        'date' => ['required'],
-        'time' => ['required'],
-        'place' => ['required']
-        
-    ]);
+// Admin Routes
+Route::prefix('admin')->controller(BookingController::class)->group(function() {
+    Route::get('/confirm', 'confirm');
+    Route::get('/confirmed', 'confirmed');
+    Route::patch('/booking', 'Confirmation');
+})->middleware(admin::class);
 
-    Booking::create([
-        'user_id' => auth()->user()->id,
-        'date' => request('date'),
-        'time' => request('time'),
-        'place' => request('place')
-    ]);
-
-    toast("Booking anda telah dikirim <br>Silahkan tunggu konfirmasi dari kami",'success');
-    return redirect()->back();
-});
+Route::get('/admin', [BookingController::class,'index'])->middleware(admin::class);

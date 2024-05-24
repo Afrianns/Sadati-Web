@@ -6,6 +6,7 @@
     </div>
     <section class="bg-white shadow w-[35rem] py-9 px-10 my-5 space-y-10">
         <form action="/personal-data-edit" method="post">
+            @method('patch')
             @csrf
             <input type="hidden" name="user_id" value={{ Auth::user()->id }}>
             <div class="mt-3">
@@ -53,6 +54,7 @@
     <h1 class="title mt-6">Edit Password.</h1>
     <section class="bg-white shadow w-[35rem] py-9 px-10 my-5 space-y-10">
         <form action="/password-edit" method="post">
+            @method('patch')
             @csrf
             <div class="mt-3 pb-6 border-b border-gray-200">
                 <label for="old_password" class="block text-sm font-medium leading-6 text-gray-900">Password Lama</label>

@@ -5,18 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
 {
-    
-    public function login() {
+
+    public function login() 
+    {   
         return view("Auth/login");
     }
-
-    public function register() {
+    
+    public function register() 
+    {
         return view("Auth/register");
     }
 
@@ -30,15 +33,14 @@ class UserController extends Controller
             'password' => ['required','min:3','confirmed'],
         ]);
         
-        $user = User::create([
+        
+        User::create([
             'name' => request('name'),
             'email' => request('email'),
             'address' => request('address'),
             'phone_number' => request('phone_number'),
             'password' => request('password'),
         ]);
-
-        Auth::login($user);
 
         toast('Akun anda berhasil didaftarkan.','success');
         return redirect('/');
@@ -49,20 +51,32 @@ class UserController extends Controller
     {
         $user = request()->validate([
             'email' => ['required','email:dns'],
-            'password' => ['required','min:3']
+            'password' => ['required','min:3'],
         ]);  
 
         if(Auth::attempt($user)){
+            
             request()->session()->regenerate();
-            return redirect('/');
-        }
+            
+            // if account is normal user or admin
+            if(!Auth::user()->isAdmin){
+                return redirect('/');
+            } else{
+                return redirect('/admin');
+            }
+        } 
         
+        // if failed
         toast("Maaf, data pengguna tidak ditemukan",'error');
         return back();
     }
 
     public function edit(User $user)
     {
+        if(Gate::denies('edit_user', $user)){
+            return redirect()->back();
+        }
+
         return view("auth/edit", ['user' => $user]);
     }
 
