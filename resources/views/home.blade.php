@@ -1,4 +1,4 @@
-<x-layout :title='$title'>
+<x-user.layout :title='$title'>
     <section class="flex max-mdl:flex-col-reverse items-center w-full bg-black">
         <p class=" text-2xl ml-2 px-5 uppercase mdl:w-3/6 max-mdl:my-28">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. 
@@ -53,4 +53,4 @@
             </span>
         </div>        
     </section>
-</x-layout>
+</x-user.layout>

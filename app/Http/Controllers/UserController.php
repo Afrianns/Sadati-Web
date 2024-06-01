@@ -67,7 +67,7 @@ class UserController extends Controller
         } 
         
         // if failed
-        toast("Maaf, data pengguna tidak ditemukan",'error');
+        toast("<b>Maaf, data pengguna tidak ditemukan</b> <br> cek kembali data yang dimasukan!",'error');
         return back();
     }
 

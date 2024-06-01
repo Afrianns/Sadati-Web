@@ -1,4 +1,4 @@
-<x-header></x-header>
+<x-user.header></x-user.header>
 <div class="grid place-content-center min-h-screen">
     <div class="flex justify-between items-center mt-6">
         <h2 class="title">REGISTER.</h2>

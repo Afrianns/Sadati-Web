@@ -1,2 +1,2 @@
-<x-layout :title='$title'>
-</x-layout>
+<x-user.layout :title='$title'>
+</x-user.layout>

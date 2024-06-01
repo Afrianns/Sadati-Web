@@ -1,4 +1,4 @@
-<x-layout :title='$title'>
+<x-user.layout :title='$title'>
     <section class="bg-black mb-[20rem] relative w-full">
         <span class="bg-black absolute left-0 right-0 bottom-0 top-0 opacity-70"></span>
         <img class="object-cover w-full h-[23rem]" src="images/image1.png" alt="">
@@ -117,12 +117,12 @@
                             </td>
                             @if (!$book->isConfirmed)
                                 <td class="px-6 py-4 text-right align-top" x-data>
-                                    <form action="booking" method="post" id='deleteForm' x-on:submit.prevent='confirmation($el)'>
+                                    <x-confirmation-warning action="booking" id='deleteForm'>
                                         @csrf
                                         @method('delete')
                                         <input hidden name="booking_id" value='{{ $book->id }}' id="">
-                                        <button class="text-red-500 font-semibold" >Delete</button>
-                                    </form>
+                                        <button class="text-red-500 font-semibold">Delete</button>
+                                    </x-confirmation-warning>
                                 </td>
                             @else
                                 <td>
@@ -133,26 +133,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script>
-            function confirmation(value){
-                Swal.fire({
-                    title: "Hapus Booking",
-                    text: "Apa kamu yakin ingin menghapus -nya?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    cancelButtonText: "Batal!",
-                    confirmButtonText: "Hapus!"
-                }).then((result) =>{
-                    if (result.isConfirmed){
-                        value.submit();
-                    }
-                })
-            }
-            </script>
         </div>
     </section>
     @endif
-</x-layout>
+</x-user.layout>

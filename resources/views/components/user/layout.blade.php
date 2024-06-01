@@ -1,11 +1,10 @@
-<x-header></x-header>
+<x-user.header></x-user.header>
     <div class="min-h-full">
-    <x-navbar></x-navbar>
-    {{-- <x-header>{{ $title }}</x-header> --}}
+    <x-user.navbar></x-user.navbar>
     <main class="text-white mx-auto max-w-[1440px]">
         {{ $slot }}
     </main>
     </div>
-    <x-footer></x-footer>
+    <x-user.footer></x-user.footer>
     </body>
 </html>

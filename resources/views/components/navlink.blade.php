@@ -1,1 +1,1 @@
-<a {{ $attributes }} class="md:border-y-4  md:border-transparent {{ $url ? "max-md:bg-gray-200 md:text-black md:border-b-[#e44e3e]" : ' text-black hover:text-gray-800' }} font-medium uppercase block px-3 max-md:text-center py-3 md:py-[1.62rem] text-sm" aria-current="page">{{ $slot }}</a>
+<a {{ $attributes }} class="md:border-y-4  md:border-transparent {{ $url ? " max-md:bg-gray-200 md:text-black md:border-b-[#e44e3e]" : ' text-black hover:text-gray-800' }} font-medium uppercase block px-3 max-md:text-center py-3 md:py-[1.62rem] text-sm" aria-current="page">{{ $slot }}</a>

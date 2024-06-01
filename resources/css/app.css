@@ -43,3 +43,7 @@
 .brand-title {
     @apply font-LeagueSpartan font-extrabold text-2xl;
 }
+
+.link-btn-sort{
+    @apply border border-gray-300 py-2 px-4 cursor-pointer;
+}
