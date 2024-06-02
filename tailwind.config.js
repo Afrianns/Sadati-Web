@@ -18,6 +18,11 @@ export default {
                 mdm: "580px",
                 mds: "350px",
             },
+            colors: {
+                // secondary: "#ffddaa",
+                // secondary: "#590525",
+                secondary: "#e44e3e",
+            },
         },
     },
     plugins: [],

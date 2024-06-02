@@ -1,5 +1,5 @@
 <footer class="bg-black text-white">
-    <section class=" text-white font-Mohave bg-[#e44e3e]">
+    {{-- <section class=" text-white font-Mohave bg-secondary">
         <div class="flex max-mdm:flex-col max-mdm:gap-5 justify-around items-center py-7 mx-auto max-w-7xl">
             <h2 class="font-bold text-xl">
                 SIAP MENGGUNAKAN JASA KAMI?
@@ -7,7 +7,7 @@
             <a href="booking" class="border border-white py-2 px-6 hover:text-black hover:bg-white">Booking Sekarang</a>
            
         </div>
-    </section>
+    </section> --}}
     <section class="mdm:h-32 flex max-mdm:flex-col justify-between items-center mx-auto max-w-7xl gap-10 py-10 px-4 sm:px-6 lg:px-8">
         <h2 class="brand-title">
             SADATI

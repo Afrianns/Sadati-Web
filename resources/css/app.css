@@ -20,17 +20,35 @@
     @apply block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:underline;
 }
 
+/* packages lists home styles */
 .img-style {
-    @apply hover:scale-105 transition ease-in-out duration-300 object-cover w-full h-full;
+    @apply group-hover:scale-105 transition ease-in-out duration-300 object-cover w-full h-full;
 }
 
 .gradient-ornament {
-    @apply before:absolute before:before:absolute before:bg-gradient-to-t from-[#030303e0] before:bottom-0 before:left-0 before:right-0 before:h-36 before:z-10;
+    @apply before:absolute before:before:absolute before:bg-gradient-to-t from-[#030303e0] before:bottom-0 before:left-0 before:right-0 before:h-48 before:z-10;
 }
 
-.info-title {
-    @apply absolute bottom-10 text-center left-0 right-0 z-20 font-Mohave font-semibold text-lg;
+.info-wrapper {
+    @apply absolute bottom-10 left-5 right-0 z-20 translate-x-0 lg:translate-y-2/3 lg:group-hover:translate-y-0;
 }
+.info-title {
+    @apply font-Mohave font-bold text-4xl border-b border-gray-300 w-full py-2 group-hover:text-secondary;
+}
+
+.description {
+    @apply font-Inter font-light translate-y-5 lg:translate-y-2/3 lg:group-hover:translate-y-5;
+}
+
+@layer components {
+    .description,
+    .info-wrapper,
+    .info-title {
+        @apply transition ease-in-out duration-500;
+    }
+}
+
+/* end list */
 
 .input-styles {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
@@ -44,6 +62,9 @@
     @apply font-LeagueSpartan font-extrabold text-2xl;
 }
 
-.link-btn-sort{
+.link-btn-sort {
     @apply border border-gray-300 py-2 px-4 cursor-pointer;
+}
+.home-link {
+    @apply w-fit text-sm py-2 px-5 border border-secondary text-secondary hover:bg-secondary hover:text-black;
 }
