@@ -107,7 +107,7 @@ class BookingController extends Controller
     }
 
 
-    // controller 'patch' for accept reject user's booking  
+    // controller 'patch' for accept or reject user's booking with boolean value
     public function Confirmation()
     {
         if (Gate::denies('admin')){
@@ -119,11 +119,16 @@ class BookingController extends Controller
         ]);
 
         if($result) {
-            toast("Konfirmasi berhasil", 'success');   
-            return redirect('admin/confirmed');
+            if(request('booking_id') == '1'){  
+                toast("berhasil diterima", 'success');  
+                return redirect('admin/confirmed');
+            } else{
+                toast("berhasil ditolak", 'success');  
+                return redirect('admin/confirm');
+            }
         }
 
-        toast("Konfirmasi gagal", 'error');   
+        toast("Proses konfirmasi gagal", 'error');   
         return redirect()->back();
     }
 

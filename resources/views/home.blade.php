@@ -6,10 +6,9 @@
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                 </h3>
                 <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint magnam dolorum rerum delectus aperiam, similique, facilis, quis nesciunt consequatur inventore labore eos.</p>
-                <a href="login" class="home-link flex items-center">
+                <x-btn-link href='login'>
                     Mulai Sekarang
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
-                </a>
+                </x-btn-link>
             </div>
             <img class="bg-red-50 md:w-7/12 h-full object-cover" src="images/image1.png" alt="">
         </section>
@@ -19,10 +18,10 @@
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                 </h3>
                 <p class="text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, quos quod? Expedita aut, laborum sequi, ducimus natus quasi vitae quae dignissimos distinctio nulla est.</p>
-                <a href="booking" class="home-link flex items-center">
+                <x-btn-link href="booking">
                     Booking Sekarang
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
-                </a>
+                </x-btn-link>
+
             </div>
             <img class="object-cover md:w-7/12 h-full" src="images/image2.png" alt="">
         </section>
@@ -33,10 +32,9 @@
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                 </h3>
                 <p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit fugit eos sint odio eveniet consectetur perferendis quod officiis reprehenderit rem.</p>
-                <a href="#" class="home-link flex items-center mt-auto">
+                <x-btn-link href="#">
                     Kunjungi Galeri
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
-                </a>
+                </x-btn-link>
             </div>
         </section>
 
@@ -45,10 +43,9 @@
                 <h2 class="font-bold text-xl">
                     KATEGORI JASA KAMI
                 </h2>
-                <a href="#" class="home-link flex items-center">
+                <x-btn-link href="packages">
                     Lebih Lengkap
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="transform: ;msFilter:;"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg>
-                </a>
+                </x-btn-link>
             </div>
         </section>
         <section class="grid item-center max-lg:gap-5 gap-x-5 mx-auto max-lg:max-w-2xl grid-cols-2 lg:grid-cols-4">

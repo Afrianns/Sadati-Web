@@ -1,16 +1,18 @@
 <x-admin.admin-layout :title="$title">
-    <div class=" mb-5 ml-auto w-fit text-gray-500 flex gap-x-2 items-center text-xs">
-        <a href="?sort=terbaru">
-            <x-admin.admin-navlink :url="request()->get('sort') == 'terbaru' || request()->get('sort') == ''" class="link-btn-sort">
-                Terbaru
-            </x-admin.admin-navlink>
-        </a>
-        <a href="?sort=terlama">
-            <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-sort">
-                Terlama
-            </x-admin.admin-navlink>
-        </a>
-    </div>
+    @if ($bookings->count() > 0)
+        <div class=" mb-5 ml-auto w-fit text-gray-500 flex gap-x-2 items-center text-xs">
+            <a href="?sort=terbaru">
+                <x-admin.admin-navlink :url="request()->get('sort') == 'terbaru' || request()->get('sort') == ''" class="link-btn-sort">
+                    Terbaru
+                </x-admin.admin-navlink>
+            </a>
+            <a href="?sort=terlama">
+                <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-sort">
+                    Terlama
+                </x-admin.admin-navlink>
+            </a>
+        </div>
+    @endif
         <div class="space-y-5">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -22,7 +24,6 @@
                 </div>
             @endif
             @if ($bookings->count() > 0)
-            
             @php
                 function getDateTime($param)
                 {
@@ -61,20 +62,22 @@
                         </tr>
                     </table>
                     <div class="flex justify-between mt-5">
-                        <x-confirmation-warning action="/admin/booking" method="POST" title="Tolak Booking" text="Apa anda yakin ingin menolak -nya?">
-                            @method('patch')
+                        <x-confirmation-warning action="/admin/booking" method="POST" title="Tolak Booking" text="Apa kamu yakin ingin menolak -nya?">
                             @csrf
+                            @method('patch')
                             <input type="hidden" name="value" value="0">
                             <input type="hidden" name="booking_id" value="{{ $book->id }}">
                             <button class="text-red-600 py-2 px-4">Tolak</button>
                         </x-confirmation-warning>
-                        <x-confirmation-warning action="/admin/booking" method="POST" title="Terima Booking" text="Apa anda yakin ingin menerima -nya?">
-                            @method('patch')
+
+                        <x-confirmation-warning action="/admin/booking" method="POST" title="Terima Booking" text="Apa kamu yakin ingin Menerima -nya?">
                             @csrf
+                            @method('patch')
                             <input type="hidden" name="value" value="1">
                             <input type="hidden" name="booking_id" value="{{ $book->id }}">
                             <button class="bg-green-500 text-white py-2 px-4">Terima</button>
                         </x-confirmation-warning>
+                        
                     </div>
                 </div>
             </section>

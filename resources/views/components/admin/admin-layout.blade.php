@@ -1,7 +1,7 @@
 <x-user.header></x-user.header>
-<section class="flex h-lvh" x-data="{ open: false, sidebar: false }">
-    <span x-show="sidebar" x-on:click="sidebar = false" class="bg-[#0000003d] absolute top-0 left-0 bottom-0 right-0 lgm:hidden"></span>
-    <nav class="bg-white py-8 px-5 max-lgm:absolute w-80 border border-gray-300 shadow-sm" :class=" sidebar ? 'h-full' : 'max-lgm:-translate-x-full'">
+<section class="flex h-lvh" x-data="{ open: false}">
+    <span class="bg-[#0000003d] absolute top-0 left-0 bottom-0 right-0 hidden lgm:hidden backlayer"></span>
+    <nav class="bg-white py-8 px-5 max-lgm:absolute w-80 border border-gray-300 shadow-sm h-full hidden md:block navbar">
         <h1 class="brand-title text-center">SADATI</h1>
         <ul>
             <li class="font-semibold mt-4 cursor-pointer">
@@ -31,7 +31,7 @@
     <main class="px-5 w-full overflow-y-scroll">
         <section class="mx-auto lgm:max-w-4xl">
             <div class="my-9 flex justify-between items-center" x-data="{open: false}">
-                <p class="bg-black w-5 h-5 lgm:hidden cursor-pointer" x-on:click='sidebar = !open'></p>
+                <p class="bg-black w-5 h-5 lgm:hidden cursor-pointer btn-nav"></p>
             <h1 class="font-mohave font-semibold">{{ $title }}</h1>
             <div class="relative">
                 <div x-on:click="open = !open" class="flex gap-2 items-center cursor-pointer">
@@ -52,4 +52,17 @@
             </div>
         </section>
     </main>
+    <script>
+        const backlayer = document.querySelector('.backlayer');
+        const sidebar = document.querySelector('.navbar');
+        const btn = document.querySelector('.btn-nav');
+
+        btn.addEventListener('click', () => doToggle())
+        backlayer.addEventListener("click", () => doToggle())
+        
+        function doToggle(){
+            sidebar.classList.toggle('hidden');
+            backlayer.classList.toggle('hidden');
+        }
+    </script>
 </section>

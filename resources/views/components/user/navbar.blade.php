@@ -13,7 +13,7 @@
                 <x-navlink href='/' :url="request()->is('/')">Beranda</x-navlink>
                 <x-navlink href='gallery' :url="request()->is('gallery')">Galeri</x-navlink>
                 <x-navlink href='booking' :url="request()->is('booking')">Booking</x-navlink>
-                <x-navlink href='paket' :url="request()->is('paket')">Harga & Paket</x-navlink>
+                <x-navlink href='packages' :url="request()->is('packages')">Harga & Paket</x-navlink>
             </div>
             </div>
         </div>

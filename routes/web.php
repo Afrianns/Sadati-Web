@@ -23,6 +23,13 @@ Route::get('/booking', [BookingController::class,'booking']);
 Route::post("/booking", [BookingController::class, 'create']);
 Route::delete('/booking', [BookingController::class, 'delete_by_user']);
 
+// Route for package & prices bundles
+
+Route::get("/packages", function() {
+
+    return view('packages');
+});
+
 
 // Route Users
 Route::controller(UserController::class)->group(function () {

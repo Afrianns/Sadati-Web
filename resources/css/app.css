@@ -66,5 +66,5 @@
     @apply border border-gray-300 py-2 px-4 cursor-pointer;
 }
 .home-link {
-    @apply w-fit text-sm py-2 px-5 border border-secondary text-secondary hover:bg-secondary hover:text-black;
+    @apply relative px-5 py-2 text-sm transition-all duration-700 text-secondary hover:text-white isolation-auto z-10 border border-secondary before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-secondary before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700 flex items-center justify-center;
 }
