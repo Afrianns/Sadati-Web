@@ -1,6 +1,6 @@
 <x-user.layout :title='$title'>
     <x-header-page></x-header-page>
-    <div class="flex justify-center items-center lg:items-start pt-32 lg:flex-row flex-col w-full gap-10">
+    <div class="flex justify-center items-center lg:items-start pt-32 py-20 lg:flex-row flex-col w-full gap-10">
         <div class="w-full lg:w-2/5 text-center lg:text-left px-10">
             <h2 class="font-Mohave text-4xl font-bold uppercase">
                 BOOKING
@@ -61,7 +61,6 @@
                     </form>
                     <p class="text-sm text-gray-500 font-light mt-5"> <span class="font-semibold">Catatan</span> : pastikan data yang dimasukan sesuai!</p>
                 @endcan
-                
         </div>
     </div>
     
