@@ -5,7 +5,7 @@
         </h2>
         <ul class="flex gap-5 text-gray-300">
             <li class="cursor-pointer hover:underline"><a href="/">Beranda</a></li>
-            <li class="cursor-pointer hover:underline"><a href="gallery">Galeri</a></li>
+            {{-- <li class="cursor-pointer hover:underline"><a href="gallery">Galeri</a></li> --}}
             <li class="cursor-pointer hover:underline"><a href="booking">Booking</a></li>
             <li class="cursor-pointer hover:underline"><a href="packages">Harga & Paket</a></li>
         </ul>

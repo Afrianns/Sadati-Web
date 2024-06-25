@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\admin;
 use App\Http\Middleware\auth;
 use App\Http\Middleware\guest;
+use App\Mail\MailableVerification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 // Route General
@@ -39,8 +41,8 @@ Route::controller(UserController::class)->group(function () {
     
     // register
     Route::get("/register",'register')->middleware(auth::class);
-    Route::post('/register', 'store')->middleware(auth::class);;
-    
+    Route::post('/register', 'store')->middleware(auth::class);
+
     // edit
     Route::get('/user/{user}', 'edit')->middleware(guest::class);
     Route::patch('/personal-data-edit', 'personal_data_edit')->middleware(guest::class);
@@ -59,3 +61,30 @@ Route::prefix('admin')->controller(BookingController::class)->group(function() {
 
 // default route to unconfirm booking if login user is admin 
 Route::get('/admin', [BookingController::class,'index'])->middleware(admin::class);
+
+
+// Email
+// Route::get('test', function() {
+//     Mail::to('hanifnandaafrian9@gmail.com')->send(new MailableVerification("Alex"));
+// });
+
+
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
+
+// Route::get('/email/verify', function () {
+//     return view('Auth.verify-email');
+// })->middleware('guest')->name('verification.notice');
+
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/dashboard');
+})->middleware(['guest','signed'])->name('verification.verify');
+ 
+
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
+//     return back()->with('message', 'Verification link sent!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');

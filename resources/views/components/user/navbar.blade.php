@@ -11,7 +11,7 @@
             <div class="hidden lgm:block">
             <div class="ml-10 flex items-baseline space-x-4">
                 <x-navlink href='/' :url="request()->is('/')">Beranda</x-navlink>
-                <x-navlink href='gallery' :url="request()->is('gallery')">Galeri</x-navlink>
+                {{-- <x-navlink href='gallery' :url="request()->is('gallery')">Galeri</x-navlink> --}}
                 <x-navlink href='booking' :url="request()->is('booking')">Booking</x-navlink>
                 <x-navlink href='packages' :url="request()->is('packages')">Harga & Paket</x-navlink>
             </div>

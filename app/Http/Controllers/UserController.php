@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+
+use App\Mail\MailableVerification;
+use Illuminate\Support\Facades\Mail;
 
 
 class UserController extends Controller
 {
+    
+
 
     public function login() 
     {   
@@ -33,8 +39,7 @@ class UserController extends Controller
             'password' => ['required','min:3','confirmed'],
         ]);
         
-        
-        User::create([
+        $user = User::create([
             'name' => request('name'),
             'email' => request('email'),
             'address' => request('address'),
@@ -42,8 +47,13 @@ class UserController extends Controller
             'password' => request('password'),
         ]);
 
-        toast('Akun anda berhasil didaftarkan.','success');
-        return redirect('/');
+
+        event(new Registered($user));
+        // Auth::login($user);
+        // Mail::to($user['email'])->send(new MailableVerification($user['name']));
+
+        toast('Akun anda berhasil didaftarkan. <br> Silahkan cek email untuk konfirmasi','success');
+        return redirect('/login');
     }
 
 
@@ -52,7 +62,7 @@ class UserController extends Controller
         $user = request()->validate([
             'email' => ['required','email:dns'],
             'password' => ['required','min:3'],
-        ]);  
+        ]); 
 
         if(Auth::attempt($user)){
             

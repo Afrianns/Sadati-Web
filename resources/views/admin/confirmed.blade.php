@@ -40,7 +40,7 @@
                 <table class="mt-5 table-auto space-y-5">
                     <tr>
                         <td class="pr-5 text-gray-500 font-light">Tanggal & Waktu</td>
-                        <td>{{ getDateTime($book->date)->isoFormat('d MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }}</td>
+                        <td>{{ getDateTime($book->date)->isoFormat('DD MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }}</td>
                     </tr>
                     <tr>
                         <td class="pr-5 text-gray-500 font-light">Tempat</td>

@@ -16,7 +16,7 @@ class auth
     public function handle(Request $request, Closure $next): Response
     {
         if(auth()->check()){
-            return redirect()->back();
+            return redirect('/');
         }
 
         return $next($request);
