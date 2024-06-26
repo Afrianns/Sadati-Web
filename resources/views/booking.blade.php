@@ -8,16 +8,23 @@
             <p class="text-gray-300 mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eius mollitia aliquam vitae magni?</p>
         </div>
         <div class="bg-white w-4/5 lg:w-2/5 h-fit px-6 py-7 shadow-md">
-            @guest
+            @if(Auth::guest())
                 <div class="bg-[#fc6f53] w-full h-fit mb-5 p-3">
                     <h3 class="font-bold mb-1">Perhatian</h3>
                     <p class="opacity-90 text-sm">Anda harus <span class="italic font-semibold">login</span> atau <span class="italic font-semibold">register</span> terlebih dahulu agar bisa <span class="italic font-semibold">booking</span>.</p>
                 </div>
-            @endguest
+            @endif
     
             @can("authNoAdmin")
-                <form action="/booking" method="post">
+                @if(Auth::user()->email_verified_at)
+                    <form action="/booking" method="post">
                     @csrf
+                @else
+                    <div class="bg-[#fc6f53] w-full h-fit mb-5 p-3">
+                        <h3 class="font-bold mb-1">Perhatian</h3>
+                        <p class="text-sm">Verifikasi akun anda terlebih dahulu untuk melakukan <span class="italic font-semibold">booking</span>!</p>
+                    </div>
+                @endif
             @endcan
                 <div class="col-span-6">
                     <label for="event" class="flex items-center gap-2 text-sm font-medium leading-6 text-gray-900">Jenis Paket
@@ -57,9 +64,11 @@
                     <textarea id="message" rows="4" name="place" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Masukan tempat acara..."></textarea>
                 </div>
                 @can('authNoAdmin')
-                    <button class="button-styles">BOOK</button>
-                    </form>
-                    <p class="text-sm text-gray-500 font-light mt-5"> <span class="font-semibold">Catatan</span> : pastikan data yang dimasukan sesuai!</p>
+                    @if(Auth::user()->email_verified_at)
+                        <button class="button-styles">BOOK</button>
+                        </form>
+                        <p class="text-sm text-gray-500 font-light mt-5"> <span class="font-semibold">Catatan</span> : pastikan data yang dimasukan sesuai!</p>
+                    @endif
                 @endcan
         </div>
     </div>

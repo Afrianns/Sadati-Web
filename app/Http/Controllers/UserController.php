@@ -47,7 +47,6 @@ class UserController extends Controller
             'password' => request('password'),
         ]);
 
-
         event(new Registered($user));
         // Auth::login($user);
         // Mail::to($user['email'])->send(new MailableVerification($user['name']));
@@ -65,6 +64,12 @@ class UserController extends Controller
         ]); 
 
         if(Auth::attempt($user)){
+            
+            // if(!Auth::user()->email_verified_at){
+            //     Auth::logout();
+            //     toast("Maaf, Akun belum terverifikasi!",'error');
+            //     return redirect('/login');
+            // }
             
             request()->session()->regenerate();
             

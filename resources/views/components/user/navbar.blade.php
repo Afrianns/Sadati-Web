@@ -1,5 +1,15 @@
 
 <nav x-data="{ open: false }" >
+@if(Auth::user() && !Auth::user()->email_verified_at)
+    <div class="bg-orange-400 py-2 px-8 text-center flex justify-center">
+        <p>Cek Email kamu untuk melakukan verifikasi! atau 
+            <form action="/email/verification-notification" method="post">
+                @csrf
+                <button class="px-2 underline">kirim ulang link verifikasi</button>
+            </form>
+        </p>
+    </div>
+@endif
 <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10">
     <div class="flex h-20 items-center justify-between">
         <div class="flex items-center">
@@ -32,7 +42,9 @@
                         </div>
                         <div x-show='open' @click.outside="open = false" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" x-cloak>
                             @can('authNoAdmin')
-                                <a href="user/{{ Auth::user()->id }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Edit Profil</a>
+                                @if(Auth::user()->email_verified_at)
+                                    <a href="user/{{ Auth::user()->id }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Edit Profil</a>
+                                @endif
                             @endcan
                             <form action="logout" method="POST">
                                 @csrf

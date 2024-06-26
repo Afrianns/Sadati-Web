@@ -4,10 +4,14 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\admin;
 use App\Http\Middleware\auth;
+use App\Http\Middleware\emailVerify;
 use App\Http\Middleware\guest;
+use App\Http\Middleware\verifiedEmail;
 use App\Mail\MailableVerification;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 // Route General
 Route::get('/', function () {
@@ -44,9 +48,9 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/register', 'store')->middleware(auth::class);
 
     // edit
-    Route::get('/user/{user}', 'edit')->middleware(guest::class);
-    Route::patch('/personal-data-edit', 'personal_data_edit')->middleware(guest::class);
-    Route::patch('/password-edit', 'password_edit')->middleware(guest::class);
+    Route::get('/user/{user}', 'edit')->middleware([guest::class, verifiedEmail::class]);
+    Route::patch('/personal-data-edit', 'personal_data_edit')->middleware([guest::class, verifiedEmail::class]);
+    Route::patch('/password-edit', 'password_edit')->middleware([guest::class, verifiedEmail::class]);
     
     // logout
     Route::post('/logout', 'logout');
@@ -63,15 +67,11 @@ Route::prefix('admin')->controller(BookingController::class)->group(function() {
 Route::get('/admin', [BookingController::class,'index'])->middleware(admin::class);
 
 
-// Email
+// Email Activation Routes
+
 // Route::get('test', function() {
 //     Mail::to('hanifnandaafrian9@gmail.com')->send(new MailableVerification("Alex"));
 // });
-
-
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
 
 // Route::get('/email/verify', function () {
 //     return view('Auth.verify-email');
@@ -80,11 +80,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/dashboard');
-})->middleware(['guest','signed'])->name('verification.verify');
+    return redirect('/');
+})->middleware(['email-verify', 'signed'])->name('verification.verify');
  
 
-// Route::post('/email/verification-notification', function (Request $request) {
-//     $request->user()->sendEmailVerificationNotification();
-//     return back()->with('message', 'Verification link sent!');
-// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    toast('Link verifikasi berhasil dikirim','success');
+    return redirect('/');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
