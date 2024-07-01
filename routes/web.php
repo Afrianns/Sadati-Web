@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\admin;
 use App\Http\Middleware\auth;
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
+
+
 
 // Route General
 Route::get('/', function () {
@@ -29,13 +33,13 @@ Route::get('/booking', [BookingController::class,'booking']);
 Route::post("/booking", [BookingController::class, 'create']);
 Route::delete('/booking', [BookingController::class, 'delete_by_user']);
 
+
 // Route for package & prices bundles
-
-Route::get("/packages", function() {
-
-    return view('packages');
+Route::controller(PackageController::class)->group(function () {
+    Route::get("/packages", 'index');
+    Route::get('/admin/packages','show')->middleware(admin::class);
+    Route::post('/admin/packages','edit')->middleware(admin::class);
 });
-
 
 // Route Users
 Route::controller(UserController::class)->group(function () {
@@ -67,7 +71,6 @@ Route::prefix('admin')->controller(BookingController::class)->group(function() {
 Route::get('/admin', [BookingController::class,'index'])->middleware(admin::class);
 
 
-// Email Activation Routes
 
 // Route::get('test', function() {
 //     Mail::to('hanifnandaafrian9@gmail.com')->send(new MailableVerification("Alex"));
@@ -78,6 +81,7 @@ Route::get('/admin', [BookingController::class,'index'])->middleware(admin::clas
 // })->middleware('guest')->name('verification.notice');
 
 
+// Email Activation Routes
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/');

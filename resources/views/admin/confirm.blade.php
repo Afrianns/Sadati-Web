@@ -2,12 +2,12 @@
     @if ($bookings->count() > 0)
         <div class=" mb-5 ml-auto w-fit text-gray-500 flex gap-x-2 items-center text-xs">
             <a href="?sort=terbaru">
-                <x-admin.admin-navlink :url="request()->get('sort') == 'terbaru' || request()->get('sort') == ''" class="link-btn-sort">
+                <x-admin.admin-navlink :url="request()->get('sort') == 'terbaru' || request()->get('sort') == ''" class="link-btn-filter">
                     Terbaru
                 </x-admin.admin-navlink>
             </a>
             <a href="?sort=terlama">
-                <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-sort">
+                <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-filter">
                     Terlama
                 </x-admin.admin-navlink>
             </a>
@@ -45,19 +45,45 @@
                 <div x-show="toggle" x-cloak>
                     <table class="mt-5 table-auto space-y-5">
                         <tr>
-                            <td class="pr-5 text-gray-500 font-light">Tanggal & Waktu</td>
-                            <td> {{ getDateTime($book->date)->isoFormat('D MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }} </td>
+                            <td class="pr-5 text-gray-500 font-light">Jenis Paket</td>
+                            <td> 
+                                
+                                <span class="uppercase">{{ $book->package->type }}</span>
+                                @if($book->package->category == 'lain-lain')
+                                    -
+                                    {{ $book->package->sub_type }}
+                                @else
+                                    -
+                                    {{ $book->package->category }}
+                                @endif
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
+                            <td class="pb-2"> IDR {{ $book->package->price }}</td>
+                        </tr>
+                        {{-- <tr>
+                            <td class="py-1 bg-gray-50 text-center text-sm" colspan="2">Waktu & Tempat</td>
+                        </tr> --}}
+                        <tr>
+                            <td class="pt-2 pr-5 text-gray-500 font-light">Tanggal & Waktu</td>
+                            <td class="pt-2 "> {{ getDateTime($book->date)->isoFormat('D MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }} </td>
                         </tr>
                         <tr>
-                            <td class="pr-5 text-gray-500 font-light">Tempat</td>
-                            <td>{{ $book->place }}</td>
+                            <td class="pb-2 pr-5 text-gray-500 font-light">Tempat Acara</td>
+                            <td class="pb-2">{{ $book->place }}</td>
+                        </tr>
+
+                        {{-- <tr>
+                            <td class="py-1 bg-gray-50 text-center text-sm" colspan="2">Data Pelanggan</td>
+                        </tr> --}}
+                        <tr>
+                            <td class="pt-2 pr-5 text-gray-500 font-light">Alamat Pelanggan</td>
+                            <td class="pt-2">{{ $book->user->address }}</td>
                         </tr>
                         <tr>
-                            <td class="pr-5 text-gray-500 font-light">Alamat</td>
-                            <td>{{ $book->user->address }}</td>
-                        </tr>
-                        <tr>
-                            <td class="pr-5 text-gray-500 font-light">Nomor HP</td>
+                            <td class="pr-5 text-gray-500 font-light">Nomor HP Pelanggan</td>
                             <td>{{ $book->user->phone_number }}</td>
                         </tr>
                     </table>

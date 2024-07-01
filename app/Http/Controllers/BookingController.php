@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Package;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Gate;
 
 class BookingController extends Controller
@@ -21,26 +24,31 @@ class BookingController extends Controller
         if(auth()->check()){
             $result = Booking::with('user')->where('user_id', auth()->user()->id)->get();
         }
-        return view('booking', ['title' => 'Booking', 'books' => $result]);
+
+        $packages = Package::all();
+        return view('booking', ['title' => 'Booking', 'books' => $result, 'packages' => $packages]);
     }
 
     // create booking data by users
     public function create() {
 
-        request()->validate([
+        $res = request()->validate([
             'date' => ['required'],
             'time' => ['required'],
-            'place' => ['required']
-            
+            'place' => ['required', 'min:5'],
+            'package' => ['required']
         ]);
-    
+
+        // dd($res, request('package'));
+        
         Booking::create([
             'user_id' => auth()->user()->id,
+            'package_id' => request('package'),
             'date' => request('date'),
             'time' => request('time'),
             'place' => request('place')
         ]);
-    
+        
         toast("Booking anda telah dibuat <br>Silahkan tunggu konfirmasi dari kami",'success');
         return redirect()->back();
     }
@@ -61,7 +69,7 @@ class BookingController extends Controller
 
         // check if url param is 'terbaru' or 'terlama' & if not prevent from use those url param & redirect 
         if($param == 'terbaru' || $param == 'terlama'){
-            $result = Booking::with('user')->where('isConfirmed', null);
+            $result = Booking::with(['user','package'])->where('isConfirmed', null);
             
             if($param == 'terbaru'){
                 $result = $result->orderBy("created_at",'asc'); 

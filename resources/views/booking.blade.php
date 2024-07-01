@@ -36,10 +36,17 @@
                         </div>
                     </label>
                     <div class="mt-2">
-                        <select id="event" name="event" autocomplete="event-name" class="input-styles">
-                            <option>pilihan satu</option>
-                            <option>pilihan dua</option>
-                            <option>pilihan tiga</option>
+                        <select id="event" name="package" autocomplete="event-name" class="input-styles">
+                            @foreach ($packages as $package)
+                                <option value="{{$package->id}}"> <b>{{ $package->type }}</b> - 
+                                    @if($package->category == 'lain-lain')
+                                       {{ $package->sub_type }}
+                                    @else
+                                        {{ $package->category }}
+                                        -
+                                    @endif
+                                     IDR {{ $package->price }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -61,7 +68,11 @@
                 </div>
                 <div class="mt-5">
                     <label for="place" class="block text-sm mb-2 font-medium leading-6 text-gray-900">Tempat</label>
-                    <textarea id="message" rows="4" name="place" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Masukan tempat acara..."></textarea>
+                    <input id="message" rows="4" name="place" class="input-styles" placeholder="Masukan tempat acara...">
+                </div>
+                <div class="mt-5">
+                    <label for="place" class="block text-sm mb-2 font-medium leading-6 text-gray-900">Catatan (Optional)</label>
+                    <textarea id="message" rows="4" name="note" class="input-styles" placeholder="Masukan tambahan catatan..."></textarea>
                 </div>
                 @can('authNoAdmin')
                     @if(Auth::user()->email_verified_at)

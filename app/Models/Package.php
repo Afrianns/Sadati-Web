@@ -8,19 +8,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Booking extends Model
+class Package extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','package_id','date','time','place'];
+    protected $fillable = [
+        'category',
+        'type',
+        'price',
+        'sub_type',
+        'description',
+    ];
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
-    public function package(): BelongsTo
+    public function booking(): HasOne
     {
-        return $this->BelongsTo(Package::class);
+        return $this->HasOne(Booking::class);   
     }
 }
