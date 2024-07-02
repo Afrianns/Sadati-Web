@@ -50,9 +50,10 @@ class UserController extends Controller
         event(new Registered($user));
         Auth::login($user);
         // Mail::to($user['email'])->send(new MailableVerification($user['name']));
-
+        
         toast('Akun anda berhasil didaftarkan. <br> Silahkan cek email untuk konfirmasi','success');
-        return redirect('/login');
+        // dd($res);
+        return redirect('/');
     }
 
 
@@ -139,7 +140,6 @@ class UserController extends Controller
 
         // dd(request()->all(), Auth()->user()->password);
     }
-
 
     public function logout()
     {

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->date('date');
             $table->time('time');
             $table->boolean('isConfirmed')->nullable();
+            $table->string('token')->unique()->nullable();
+            $table->enum('status',['Menunggu','Berhasil']);
             $table->text('place');
             $table->timestamps();
         });

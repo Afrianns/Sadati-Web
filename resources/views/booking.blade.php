@@ -83,10 +83,10 @@
                 @endcan
         </div>
     </div>
-    
+    <div id="showcase"></div>
     
     @if(Auth::user() && $books->count() > 0)
-    <section class="max-w-4xl mx-auto text-black my-10 px-3">
+    <section class="max-w-4xl mx-auto text-black my-10 px-3" x-data='payment()'>
         <h2 class="font-bold text-2xl mb-5">Info Booking</h2>
         <div class="relative sm:rounded-lg max-lgm:overflow-x-scroll">
             <table class="text-sm text-left text-gray-500 w-max md:w-full table-auto">
@@ -102,7 +102,7 @@
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            <span class="sr-only">Edit</span>
+                            {{-- @if() --}}
                         </th>
                     </tr>
                 </thead>
@@ -113,7 +113,7 @@
                     }
                 @endphp
                 @foreach ($books as $book)
-                <tbody class="border-[#f0f0f0] border-y-8" x-data='{ expand : false }'>
+                <tbody class="border-[#f0f0f0] border-y-8" x-data="{ expand: false }">
                     @if ($book->isConfirmed)
                         <tr class="bg-white hover:bg-gray-50 cursor-pointer" x-on:click="expand = !expand">
                     @else
@@ -134,19 +134,24 @@
                                     <span class="bg-red-200 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">ditolak</span>
                                 @endif
                             </td>
-                            @if (!$book->isConfirmed)
-                                <td class="px-6 py-4 text-right align-top" x-data>
+                            <td class="text-left">
+                                @if (!$book->isConfirmed)
                                     <x-confirmation-warning action="/booking" method="POST" title="Hapus Booking">
                                         @csrf
                                         @method('delete')
                                         <input hidden name="booking_id" value='{{ $book->id }}' id="">
-                                        <button class="text-red-500 font-semibold">Delete</button>
+                                        <button class="text-red-500 clickable bg-red-200 px-5 py-1">Hapus</button>
                                     </x-confirmation-warning>
-                                </td>
-                            @else
-                                <td>
-                                </td>
-                            @endif
+                                @else
+                                    @if($book->status == 'Menunggu')
+                                        <button class="clickable bg-slate-200 px-5 py-1" x-on:click="snapPayment('{{ $book->token }}','{{ $book->id }}')">
+                                            Bayar
+                                        </button>
+                                    @else
+                                      <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">Berhasil Dibayar</span>
+                                    @endif
+                                @endif
+                            </td>
                         </tr>
                     @if ($book->isConfirmed)
                         <tr class="bg-white border-b-8 border-[#F0F0F0]" x-show="expand" x-cloak>
@@ -164,4 +169,5 @@
         </div>
     </section>
     @endif
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_ID') }}"></script>
 </x-user.layout>

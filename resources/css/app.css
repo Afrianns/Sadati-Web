@@ -71,7 +71,7 @@
 }
 
 .clickable-styles {
-    @apply py-1 px-3 border border-gray-100 cursor-pointer;
+    @apply py-1 border border-gray-200 cursor-pointer  inline-block;
 }
 
 .list-styles {

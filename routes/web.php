@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\admin;
 use App\Http\Middleware\auth;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
 
 
 
@@ -58,6 +58,10 @@ Route::controller(UserController::class)->group(function () {
     
     // logout
     Route::post('/logout', 'logout');
+
+    // Payment
+    
+    Route::post('/payment', 'payment');
 });
 
 // Admin Routes
@@ -65,10 +69,12 @@ Route::prefix('admin')->controller(BookingController::class)->group(function() {
     Route::get('/confirm/{sort?}', 'confirm');
     Route::get('/confirmed', 'confirmed');
     Route::patch('/booking', 'Confirmation');
+    Route::get('/', 'index');
 })->middleware(admin::class);
 
+
 // default route to unconfirm booking if login user is admin 
-Route::get('/admin', [BookingController::class,'index'])->middleware(admin::class);
+// Route::get('/admin', [BookingController::class,'index'])->middleware(admin::class);
 
 
 
@@ -93,3 +99,11 @@ Route::post('/email/verification-notification', function (Request $request) {
     toast('Link verifikasi berhasil dikirim','success');
     return redirect('/');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
+// After Payment Route
+
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('payment/success/{id}', 'successPay')->name("payment-success");
+    Route::get('payment/failed', 'failedPay')->name("payment-failed");
+});

@@ -3,12 +3,12 @@
         <div class=" mb-5 ml-auto w-fit text-gray-500 flex gap-x-2 items-center text-xs">
             <p>Urutkan Jadwal</p>
             <a href="?sort=terdekat">
-                <x-admin.admin-navlink :url="request()->get('sort') == 'terdekat' || request()->get('sort') == ''" class="link-btn-sort">
+                <x-admin.admin-navlink :url="request()->get('sort') == 'terdekat' || request()->get('sort') == ''" class="link-btn-filter">
                     Terdekat
                 </x-admin.admin-navlink>
             </a>
             <a href="?sort=terlama">
-                <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-sort">
+                <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-filter">
                     Terlama
                 </x-admin.admin-navlink>
             </a>
@@ -39,6 +39,26 @@
             <div x-show="open" x-cloak>
                 <table class="mt-5 table-auto space-y-5">
                     <tr>
+                        <td class="pr-5 text-gray-500 font-light">Jenis Paket</td>
+                        <td> 
+                            
+                            <span class="uppercase">{{ $book->package->type }}</span>
+                            @if($book->package->category == 'lain-lain')
+                                -
+                                {{ $book->package->sub_type }}
+                            @else
+                                -
+                                {{ $book->package->category }}
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
+                        <td class="pb-2"> IDR {{ $book->package->price }}</td>
+                    </tr>
+
+                    <tr>
                         <td class="pr-5 text-gray-500 font-light">Tanggal & Waktu</td>
                         <td>{{ getDateTime($book->date)->isoFormat('DD MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }}</td>
                     </tr>
@@ -46,12 +66,13 @@
                         <td class="pr-5 text-gray-500 font-light">Tempat</td>
                         <td>{{ $book->place }}</td>
                     </tr>
+
                     <tr>
-                        <td class="pr-5 text-gray-500 font-light">Alamat</td>
-                        <td>{{ $book->user->address }}</td>
+                        <td class="pt-2 pr-5 text-gray-500 font-light">Alamat Pelanggan</td>
+                        <td class="pt-2">{{ $book->user->address }}</td>
                     </tr>
                     <tr>
-                        <td class="pr-5 text-gray-500 font-light">Nomor HP</td>
+                        <td class="pr-5 text-gray-500 font-light">Nomor HP Pelanggan</td>
                         <td>{{ $book->user->phone_number }}</td>
                     </tr>
                 </table>
