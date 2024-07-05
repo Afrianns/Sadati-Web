@@ -1,16 +1,19 @@
 <x-admin.admin-layout :title="$title">
     @if ($bookings->count() > 0)
-        <div class=" mb-5 ml-auto w-fit text-gray-500 flex gap-x-2 items-center text-xs">
-            <a href="?sort=terbaru">
-                <x-admin.admin-navlink :url="request()->get('sort') == 'terbaru' || request()->get('sort') == ''" class="link-btn-filter">
-                    Terbaru
-                </x-admin.admin-navlink>
-            </a>
-            <a href="?sort=terlama">
-                <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-filter">
-                    Terlama
-                </x-admin.admin-navlink>
-            </a>
+        <div class="ml-auto w-fit text-gray-500 text-xs space-y-2 mb-5">
+            <p>Pilih Kategori</p>
+            <div class="text-gray-500 flex gap-x-2 items-center">
+                <a href="?sort=terbaru">
+                    <x-admin.admin-navlink :url="request()->get('sort') == 'terbaru' || request()->get('sort') == ''" class="link-btn-filter">
+                        Terbaru
+                    </x-admin.admin-navlink>
+                </a>
+                <a href="?sort=terlama">
+                    <x-admin.admin-navlink :url="request()->get('sort') == 'terlama'" class="link-btn-filter">
+                        Terlama
+                    </x-admin.admin-navlink>
+                </a>
+            </div>
         </div>
     @endif
         <div class="space-y-5">

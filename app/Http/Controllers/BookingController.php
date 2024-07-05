@@ -7,6 +7,7 @@ use App\Models\Package;
 use App\Models\User;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -23,6 +24,8 @@ class BookingController extends Controller
         Config::$isSanitized = env('IS_SANITIZED');
         // Set 3DS transaction for credit card to true
         Config::$is3ds = env('IS_3DS');
+
+        Config::$overrideNotifUrl = 'https://www.google.com';
     }
 
     // redirect user admin to unconfirmed bookings page
@@ -38,31 +41,32 @@ class BookingController extends Controller
         $result = null;
 
         if(auth()->check()){
-            $result = Booking::with('user')->where('user_id', auth()->user()->id)->get();
+            // dd(auth()->user);
+            $result = Booking::with('user','payment')->where('user_id', auth()->user()->id)->paginate(5);
         }
 
         $packages = Package::all();
-        return view('booking', ['title' => 'Booking', 'books' => $result, 'packages' => $packages]);
+        return view('booking', ['title' => 'Booking', 'bookings' => $result, 'packages' => $packages]);
     }
 
     // create booking data by users
-    public function create() {
+    public function create(Request $request) {
 
-        $res = request()->validate([
+        $res = $request->validate([
             'date' => ['required'],
             'time' => ['required'],
             'place' => ['required', 'min:5'],
             'package' => ['required']
         ]);
 
-        // dd($res, request('package'));
+        // dd($res, request('package'), $res['package']);
         
         Booking::create([
             'user_id' => auth()->user()->id,
-            'package_id' => request('package'),
-            'date' => request('date'),
-            'time' => request('time'),
-            'place' => request('place')
+            'package_id' => $res['package'],
+            'date' => $res['date'],
+            'time' => $res['time'],
+            'place' => $res['place']
         ]);
         
         toast("Booking anda telah dibuat <br>Silahkan tunggu konfirmasi dari kami",'success');
@@ -104,30 +108,44 @@ class BookingController extends Controller
     // confirmed page for admin 
     public function confirmed() 
     {
+        // dd(request()->all());
+
         // check if url param sort is exist & if didnt then add default value 
-        if(!isset($_GET["sort"])){
-            $param = 'terdekat';
+        if(!isset($_GET["sort"]) && !isset($_GET['Ptype'])){
+            $sort = 'terdekat';
+            $type = 'paid';
         } else{
-            $param = $_GET['sort'];
+            $sort = $_GET['sort'];
+            $type = $_GET['Ptype'];
         }
 
         if (Gate::denies('admin')){
             return redirect()->back();
         }
+        $result = Booking::with('user','payment','package')->where('isConfirmed', true);
+
+        $isSort = $sort == 'terdekat' || $sort == 'terlama';
+        $isType = $type == 'paid' || $type == 'unpaid';
+
          // check if url param is 'terdekat' or 'terlama' & if not prevent from use those url param & redirect 
-         if($param == 'terdekat' || $param == 'terlama'){
-             $result = Booking::with('user')->where('isConfirmed', true);
-             if($param == 'terdekat'){
+         if($isSort && $isType){
+            // dd($sort, $type);
+            if($type == 'paid'){
+                $result = $result->has('payment');
+            } else{
+                $result = $result->doesntHave('payment');
+            }
+        
+             if($sort == 'terdekat'){
                 $result = $result->orderBy("date",'asc'); 
             } else {
                 $result = $result->orderBy("date", 'desc'); 
             }
+
             $result = $result->get();
 
-            return view("admin/confirmed", ['title' => 'TERKONFIRMASI','bookings' => $result]);
-         } else{
-            return view("admin/confirmed");
-         }
+        } 
+        return view("admin/confirmed", ['title' => 'TERKONFIRMASI','bookings' => $result]);
     }
 
 
@@ -144,16 +162,17 @@ class BookingController extends Controller
         ]);
 
         if($result) {
-            toast("berhasil diterima", 'success');  
-            return redirect('admin/confirmed');
-        } else{
-            toast("berhasil ditolak", 'success');  
-            return redirect('admin/confirm');
-
+            if(request('value') == 1) {
+                toast("berhasil diterima", 'success');  
+                return redirect('admin/confirmed');
+            } else if(request('value') == 0){
+                toast("berhasil ditolak", 'success');  
+                return redirect('admin/confirm');
+            }
         }
 
         toast("Proses konfirmasi gagal", 'error');   
-        return redirect()->back();
+        return redirect('admin/confirm');
     }
 
     // controller delete for user if not yet confirmed or rejected (cannot delete if its already accepted)
@@ -182,6 +201,10 @@ class BookingController extends Controller
                 'email' => 'budi.pra@example.com',
                 'phone' => '08111222333',
             ],
+
+            // "callbacks" => [
+            //      "finish" => env("APP_URL")
+            // ]
         ];
         
         $snapToken = Snap::getSnapToken($params);

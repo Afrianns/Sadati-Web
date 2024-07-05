@@ -8,8 +8,11 @@ use Illuminate\Http\Request;
 class PackageController extends Controller
 {
     public $packages;
+    public $category;
+
     public function __construct() {
         $this->packages = Package::all();
+        $this->category = "";
     }
 
     public function index()
@@ -21,19 +24,17 @@ class PackageController extends Controller
     {
 
         if(!isset($_GET["category"])){
-            $param = 'prewedding';
+            $this->category = 'prewedding';
         } else{
-            $param = $_GET['category'];
+            $this->category = $_GET['category'];
         }
 
-        return view('admin.admin-package', ['title' => 'Edit Paket & Harga', 'packages' => $this->packages,'category' => $param]);   
+        return view('admin.admin-package', ['title' => 'Edit Paket & Harga', 'packages' => $this->packages, 'category' => $this->category]);   
     }
 
-    public function edit()
+    public function edit(Request $request)
     {
-
-        // Validate Input
-        $validatedItem = request()->validate([
+        $validatedItem = $request->validate([
             'package-id' => ['required'],
             'price-edit' => ['required'],
             'desc-edit' => ['required'],
@@ -50,6 +51,57 @@ class PackageController extends Controller
         } else{
             toast("Gagal, Data gagal diperbarui",'error');
         }
+        return redirect('/admin/packages');
+    }
+
+    public function add(string $request = 'prewedding')
+    {
+        if($request == 'wedding' || $request == 'lain-lain' || $request == 'prewedding'){
+            // dd($request);
+            return view('admin/admin-create-package',['title' => "TAMBAH PAKET BARU",'category' => $request]);
+        }
+
+        return redirect('/admin/packages');
+
+    }
+    
+    public function postAdd(Request $request)
+    {
+        $validatedItem = $request->validate([
+            'category' => ['required'],
+            'type' => ['required'],
+            'price' => ['required'],
+            'desc' => ['required'],
+            'desc.*' => ['required','min:5'],
+        ]);
+
+        $result = Package::create([
+            'category' => $validatedItem['category'],
+            'type' => $validatedItem['type'],
+            'price' => Number_format($validatedItem['price']),
+            'sub_type' => $request->sub_type,
+            'description' => json_encode($validatedItem['desc'])
+        ]);
+
+        if($result){
+            toast('Berhasil Menambahkan Paket','success');
+        } else{
+            toast('Gagal Menambahkan Paket','error');
+        }
+
+        return redirect('/admin/packages');
+    }
+
+    public function deletePackage(Request $request)
+    {
+        $result = Package::where('id', request('package_id'))->delete();
+
+        if($result){
+            toast('Berhasil Menghapus Paket','success');
+        } else{
+            toast('Gagal Menghapus Paket','error');
+        }
+
         return redirect('/admin/packages');
     }
 }

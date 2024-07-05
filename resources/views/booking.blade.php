@@ -85,7 +85,7 @@
     </div>
     <div id="showcase"></div>
     
-    @if(Auth::user() && $books->count() > 0)
+    @if(Auth::user() && $bookings->count() > 0)
     <section class="max-w-4xl mx-auto text-black my-10 px-3" x-data='payment()'>
         <h2 class="font-bold text-2xl mb-5">Info Booking</h2>
         <div class="relative sm:rounded-lg max-lgm:overflow-x-scroll">
@@ -112,7 +112,7 @@
                         return Carbon\Carbon::parse($param)->settings(['locale' => 'id_ID','timezone' => 'Asia/Jakarta']);
                     }
                 @endphp
-                @foreach ($books as $book)
+                @foreach ($bookings as $book)
                 <tbody class="border-[#f0f0f0] border-y-8" x-data="{ expand: false }">
                     @if ($book->isConfirmed)
                         <tr class="bg-white hover:bg-gray-50 cursor-pointer" x-on:click="expand = !expand">
@@ -120,7 +120,7 @@
                         <tr class="bg-white hover:bg-gray-50">
                     @endif
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 align-top">
-                                {{ $book->user->name}}
+                                {{ Auth::user()->name}}
                             </td>
                             <td class="px-6 py-4 align-top">
                                 {{ getDateTime($book->date . $book->time)->diffForHumans() }}
@@ -140,32 +140,44 @@
                                         @csrf
                                         @method('delete')
                                         <input hidden name="booking_id" value='{{ $book->id }}' id="">
-                                        <button class="text-red-500 clickable bg-red-200 px-5 py-1">Hapus</button>
+                                        <button class="clickable text-red-500 hover:underline">Hapus</button>
                                     </x-confirmation-warning>
                                 @else
-                                    @if($book->status == 'Menunggu')
-                                        <button class="clickable bg-slate-200 px-5 py-1" x-on:click="snapPayment('{{ $book->token }}','{{ $book->id }}')">
-                                            Bayar
-                                        </button>
+                                {{-- {{ $book }} --}}
+                                    @if(!$book->payment)
+                                        <form action="" method="post">
+                                            @csrf
+                                            <button class="clickable text-blue-500 hover:underline" x-on:click.prevent="snapPayment('{{ $book->token }}','{{ $book->id }}')">
+                                                Bayar
+                                            </button>
+                                        </form>
                                     @else
-                                      <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">Berhasil Dibayar</span>
+                                      <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terbayar</span>
                                     @endif
                                 @endif
                             </td>
                         </tr>
                     @if ($book->isConfirmed)
                         <tr class="bg-white border-b-8 border-[#F0F0F0]" x-show="expand" x-cloak>
-                            <td colspan="2" class="border-t-2 border-secondary p-4">
+                            <td class="border-t-2 border-secondary p-4">
                                 <span class="font-bold">Tempat Acara</span> <p>{{ $book->place }}</p>
                             </td>
-                            <td colspan="2" class="border-t-2 border-secondary p-4">    
+                            <td colspan="2" class="border-t-2 border-secondary py-4">    
                                 <span class="font-bold">Tanggal & Waktu Acara</span> <p class="bg-gray-100 w-fit py-1 px-4 my-1">{{ getDateTime($book->date)->isoFormat('D MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }}</p>
                             </td>
+                            @if($book->payment)
+                            <td class="border-t-2 border-secondary">
+                                <a class="clickable text-green-600 hover:underline" href="/payment/invoice/{{ $book->id }}">Lihat Invoice</a>
+                            </td>
+                            @else
+                            <td class="border-t-2 border-secondary"></td>
+                            @endif
                         </tr>
                     @endif
                 </tbody>
                 @endforeach
             </table>
+            {{ $bookings->links('pagination::tailwind') }}
         </div>
     </section>
     @endif

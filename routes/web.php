@@ -38,7 +38,10 @@ Route::delete('/booking', [BookingController::class, 'delete_by_user']);
 Route::controller(PackageController::class)->group(function () {
     Route::get("/packages", 'index');
     Route::get('/admin/packages','show')->middleware(admin::class);
-    Route::post('/admin/packages','edit')->middleware(admin::class);
+    Route::post('/admin/packages/edit','edit')->middleware(admin::class);
+    Route::get('/admin/packages/create/{category?}','add')->middleware(admin::class);
+    Route::post('/admin/packages/create','postAdd')->middleware(admin::class);
+    Route::delete('/admin/package/delete','deletePackage')->middleware(admin::class);
 });
 
 // Route Users
@@ -67,7 +70,7 @@ Route::controller(UserController::class)->group(function () {
 // Admin Routes
 Route::prefix('admin')->controller(BookingController::class)->group(function() {
     Route::get('/confirm/{sort?}', 'confirm');
-    Route::get('/confirmed', 'confirmed');
+    Route::get('/confirmed/{sort?}/{Ptype?}', 'confirmed');
     Route::patch('/booking', 'Confirmation');
     Route::get('/', 'index');
 })->middleware(admin::class);
@@ -104,6 +107,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 // After Payment Route
 
 Route::controller(PaymentController::class)->group(function () {
-    Route::get('payment/success/{id}', 'successPay')->name("payment-success");
+    Route::get('payment/success/{id}/{data}', 'successPay')->name("payment-success");
+    // Route::post('payment/success', 'successPay')->name("payment-success");
     Route::get('payment/failed', 'failedPay')->name("payment-failed");
+
+    // Payment Invoice
+    
+    Route::get('/payment/invoice/{id}', 'invoice');
 });

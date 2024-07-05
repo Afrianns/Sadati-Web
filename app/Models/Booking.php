@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+
 class Booking extends Model
 {
     use HasFactory;
@@ -22,5 +23,10 @@ class Booking extends Model
     public function package(): BelongsTo
     {
         return $this->BelongsTo(Package::class);
+    }
+
+    public function payment(): HasOne
+    {
+        return $this->hasOne(Payment::class);
     }
 }
