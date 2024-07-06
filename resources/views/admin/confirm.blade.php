@@ -89,6 +89,14 @@
                             <td class="pr-5 text-gray-500 font-light">Nomor HP Pelanggan</td>
                             <td>{{ $book->user->phone_number }}</td>
                         </tr>
+
+                        {{ $book->note }}
+                        @if($book->note)
+                            <tr>
+                                <td class="pt-2 pr-5 text-gray-500 font-light">Catatan pelanggan</td>
+                                <td>{{ $book->note }}</td>
+                            </tr>
+                        @endif
                     </table>
                     <div class="flex justify-between mt-5">
                         <x-confirmation-warning action="/admin/booking" method="POST" title="Tolak Booking" text="Apa kamu yakin ingin menolak -nya?">

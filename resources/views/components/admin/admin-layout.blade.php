@@ -5,7 +5,7 @@
         <h1 class="brand-title text-center">SADATI</h1>
         <ul>
             <li class="font-semibold mt-4 cursor-pointer">
-                <x-admin.admin-navlink class='flex items-center justify-between py-2 px-3 rounded-sm' :url="request()->is('admin/confirm') || request()->is('admin/confirmed')" x-on:click="open = !open">
+                <x-admin.admin-navlink class='flex items-center justify-between py-2 px-3 rounded-sm' :url="request()->is('admin/confirm') || request()->is('admin/confirmed') || request()->is('admin/history')" x-on:click="open = !open">
                     <div class="flex gap-2 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M6.012 18H21V4c0-1.103-.897-2-2-2H6c-1.206 0-3 .799-3 3v14c0 2.201 1.794 3 3 3h15v-2H6.012C5.55 19.988 5 19.806 5 19s.55-.988 1.012-1zM8 9h3V6h2v3h3v2h-3v3h-2v-3H8V9z"></path></svg>
                         Booking
@@ -19,6 +19,9 @@
                     </x-admin.admin-navlink>
                     <x-admin.admin-navlink class="py-2 px-3 rounded-sm" :url="request()->is('admin/confirmed')">
                         <a class="text-sm px-9" href='/admin/confirmed'>Terkonfirmasi</a>
+                    </x-admin.admin-navlink>
+                    <x-admin.admin-navlink class="py-2 px-3 rounded-sm" :url="request()->is('admin/history')">
+                        <a class="text-sm px-9" href='/admin/history'>Riwayat</a>
                     </x-admin.admin-navlink>
                 </div>
             </li>

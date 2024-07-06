@@ -66,7 +66,8 @@ class BookingController extends Controller
             'package_id' => $res['package'],
             'date' => $res['date'],
             'time' => $res['time'],
-            'place' => $res['place']
+            'place' => $res['place'],
+            'note' => $request->note
         ]);
         
         toast("Booking anda telah dibuat <br>Silahkan tunggu konfirmasi dari kami",'success');
@@ -122,10 +123,12 @@ class BookingController extends Controller
         if (Gate::denies('admin')){
             return redirect()->back();
         }
-        $result = Booking::with('user','payment','package')->where('isConfirmed', true);
+        $result = Booking::with('user','payment','package')->where('isConfirmed', true)->where('isFinished', null);
 
         $isSort = $sort == 'terdekat' || $sort == 'terlama';
         $isType = $type == 'paid' || $type == 'unpaid';
+
+        $count = $result->get();
 
          // check if url param is 'terdekat' or 'terlama' & if not prevent from use those url param & redirect 
          if($isSort && $isType){
@@ -145,7 +148,29 @@ class BookingController extends Controller
             $result = $result->get();
 
         } 
-        return view("admin/confirmed", ['title' => 'TERKONFIRMASI','bookings' => $result]);
+        return view("admin/confirmed", ['title' => 'TERKONFIRMASI','bookings' => $result, 'total' => $count]);
+    }
+
+    public function addHistoryPost(Request $request)
+    {
+        $result = Booking::where("id", $request->booking_id)->update([
+            'isFinished' => true
+        ]);
+
+        if($result){
+            toast('Berhasil diperbarui <br> bisa dicek di daftar riwayat', 'success');
+        } else{            
+            toast('Gagal diperbarui', 'error');
+        }
+
+        return redirect('admin/confirmed');
+    }
+
+    public function history()
+    {
+        $result = Booking::with('user','package')->where("isFinished", true)->get();
+        // dd($result);
+        return view('admin/history', ['title' => "Riwayat",'completedBooks' => $result]);
     }
 
 

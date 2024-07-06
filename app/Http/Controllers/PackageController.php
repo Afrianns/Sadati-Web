@@ -38,12 +38,18 @@ class PackageController extends Controller
             'package-id' => ['required'],
             'price-edit' => ['required'],
             'desc-edit' => ['required'],
+            'type-edit' => ['required'],
             'desc-edit.*' => ['required','min:5'],
         ]);
+        $sub_type = null;
+
+        if($request->sub_type_edit){
+            $sub_type = $request->sub_type_edit;
+        }
 
         // Update Data
         $result = Package::where('id', $validatedItem['package-id'])
-        ->update(['price' => $validatedItem['price-edit'], 'description' => json_encode($validatedItem['desc-edit'])]);
+        ->update(['sub_type' => $sub_type, 'type' => $validatedItem['type-edit'],'price' => $validatedItem['price-edit'], 'description' => json_encode($validatedItem['desc-edit'])]);
 
         // Handle success & Fail update
         if($result){

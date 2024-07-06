@@ -71,6 +71,9 @@ Route::controller(UserController::class)->group(function () {
 Route::prefix('admin')->controller(BookingController::class)->group(function() {
     Route::get('/confirm/{sort?}', 'confirm');
     Route::get('/confirmed/{sort?}/{Ptype?}', 'confirmed');
+
+    Route::patch('/history', 'addHistoryPost');
+    Route::get('/history', 'history');
     Route::patch('/booking', 'Confirmation');
     Route::get('/', 'index');
 })->middleware(admin::class);

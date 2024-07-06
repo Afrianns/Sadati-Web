@@ -1,5 +1,5 @@
 <x-admin.admin-layout :title="$title">
-    @if ($bookings->count() > 0)
+    @if ($bookings->count() > 0 || $total->count() > 0)
     <div class="flex mb-5 justify-between">
         @php
             $sort = request()->get('sort') ?: "terdekat";
@@ -79,8 +79,14 @@
                             </tr>
 
                             <tr>
-                                <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
-                                <td class="pb-2"> IDR {{ $book->package->price }}</td>
+                                <td class="pb-3 pr-5 text-gray-500 font-light">Harga Paket</td>
+                                <td class="pb-3"> IDR {{ $book->package->price }} 
+                                    @if($book->payment)
+                                        <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terbayar</span>
+                                    @else
+                                        <span class="bg-orange-200 text-orange-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">belum bayar</span>
+                                    @endif
+                                </td>
                             </tr>
 
                             <tr>
@@ -100,13 +106,26 @@
                                 <td class="pr-5 text-gray-500 font-light">Nomor HP Pelanggan</td>
                                 <td>{{ $book->user->phone_number }}</td>
                             </tr>
+                            @if($book->note)
+                                <tr>
+                                    <td class="pt-2 pr-5 text-gray-500 font-light">Catatan pelanggan</td>
+                                    <td>{{ $book->note }}</td>
+                                </tr>
+                            @endif
                         </table>
+
+                        <x-confirmation-warning action="/admin/history" method="POST" title="Tutup Booking" text="Apa kamu yakin ingin Menutup -nya?">
+                            @csrf
+                            @method('patch')
+                            <input type="hidden" name="booking_id" value="{{ $book->id }}">
+                            <button class="bg-red-500 text-white py-1 px-4 mt-5">Tutup</button>
+                        </x-confirmation-warning>
                     </div>
                 </section>
             {{-- </div> --}}
         @endforeach
         @else
-            <h1 class="text-center font-Mohave text-gray-600">Ooops.. Tidak Ada yang Booking Terkonfirmasi saat ini.</h1>
+            <h1 class="text-center font-Mohave text-gray-600 py-10">Ooops.. Tidak Ada yang Booking Terkonfirmasi disini.</h1>
         @endif
     </div>
 </x-admin.admin-layout>

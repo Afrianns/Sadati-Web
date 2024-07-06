@@ -3,9 +3,9 @@
     <div class="flex justify-center items-center lg:items-start pt-32 py-20 lg:flex-row flex-col w-full gap-10">
         <div class="w-full lg:w-2/5 text-center lg:text-left px-10">
             <h2 class="font-Mohave text-4xl font-bold uppercase">
-                BOOKING
+                RESERVASI
             </h2>
-            <p class="text-gray-300 mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum quod eius mollitia aliquam vitae magni?</p>
+            <p class="text-gray-300 mt-5">Masukan formulir data tempat, tanggal, waktu, dan tipe paket yang akan dipakai.</p>
         </div>
         <div class="bg-white w-4/5 lg:w-2/5 h-fit px-6 py-7 shadow-md">
             @if(Auth::guest())
@@ -125,37 +125,51 @@
                             <td class="px-6 py-4 align-top">
                                 {{ getDateTime($book->date . $book->time)->diffForHumans() }}
                             </td>
-                            <td class="px-6 py-4 align-top">
-                                @if (is_null($book->isConfirmed))
-                                    <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">menuggu konfirmasi</span>
-                                @elseif ($book->isConfirmed)
-                                    <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terkonfirmasi</span>
-                                @else
-                                    <span class="bg-red-200 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">ditolak</span>
-                                @endif
-                            </td>
-                            <td class="text-left">
-                                @if (!$book->isConfirmed)
+                            @if(!$book->isFinished)
+                                <td class="px-6 py-4 align-top">
+                                    @if (is_null($book->isConfirmed))
+                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">menuggu konfirmasi</span>
+                                    @elseif ($book->isConfirmed)
+                                        <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terkonfirmasi</span>
+                                    @else
+                                        <span class="bg-red-200 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">ditolak</span>
+                                    @endif
+                                </td>
+                                <td class="text-left">
+                                    @if (!$book->isConfirmed)
+                                        <x-confirmation-warning action="/booking" method="POST" title="Hapus Booking">
+                                            @csrf
+                                            @method('delete')
+                                            <input hidden name="booking_id" value='{{ $book->id }}' id="">
+                                            <button class="clickable text-red-500 hover:underline">Hapus</button>
+                                        </x-confirmation-warning>
+                                    @else
+                                    {{-- {{ $book }} --}}
+                                        @if(!$book->payment)
+                                            <form action="" method="post">
+                                                @csrf
+                                                <button class="clickable text-blue-500 hover:underline" x-on:click.prevent="snapPayment('{{ $book->token }}','{{ $book->id }}')">
+                                                    Bayar
+                                                </button>
+                                            </form>
+                                        @else
+                                        <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terbayar</span>
+                                        @endif
+                                    @endif
+                                </td>
+                            @else
+                                <td>
+                                    <p>Booking ditutup</p>
+                                </td>
+                                <td>
                                     <x-confirmation-warning action="/booking" method="POST" title="Hapus Booking">
                                         @csrf
                                         @method('delete')
                                         <input hidden name="booking_id" value='{{ $book->id }}' id="">
                                         <button class="clickable text-red-500 hover:underline">Hapus</button>
                                     </x-confirmation-warning>
-                                @else
-                                {{-- {{ $book }} --}}
-                                    @if(!$book->payment)
-                                        <form action="" method="post">
-                                            @csrf
-                                            <button class="clickable text-blue-500 hover:underline" x-on:click.prevent="snapPayment('{{ $book->token }}','{{ $book->id }}')">
-                                                Bayar
-                                            </button>
-                                        </form>
-                                    @else
-                                      <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terbayar</span>
-                                    @endif
-                                @endif
-                            </td>
+                                </td>
+                            @endif
                         </tr>
                     @if ($book->isConfirmed)
                         <tr class="bg-white border-b-8 border-[#F0F0F0]" x-show="expand" x-cloak>
