@@ -1,4 +1,7 @@
 <x-admin.admin-layout :title="$title">
+    @php
+        $formatter = new NumberFormatter('id_ID',  NumberFormatter::CURRENCY);
+    @endphp
     @if ($bookings->count() > 0)
         <div class="ml-auto w-fit text-gray-500 text-xs space-y-2 mb-5">
             <p>Pilih Kategori</p>
@@ -64,7 +67,7 @@
                         
                         <tr>
                             <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
-                            <td class="pb-2"> IDR {{ $book->package->price }}</td>
+                            <td class="pb-2"> IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</td>
                         </tr>
                         {{-- <tr>
                             <td class="py-1 bg-gray-50 text-center text-sm" colspan="2">Waktu & Tempat</td>
@@ -90,13 +93,17 @@
                             <td>{{ $book->user->phone_number }}</td>
                         </tr>
 
-                        {{ $book->note }}
                         @if($book->note)
                             <tr>
                                 <td class="pt-2 pr-5 text-gray-500 font-light">Catatan pelanggan</td>
                                 <td>{{ $book->note }}</td>
                             </tr>
                         @endif
+
+                        <tr>
+                            <td class="pt-7 pr-5 text-gray-500 font-light">Diajukan pada</td>
+                            <td class="pt-7 flex items-center gap-2">{{ getDateTime($book->created_at)->format("j F Y") }} <span class="text-xs text-gray-500 bg-gray-200 py-0.5 px-1.5">{{ getDateTime($book->created_at)->diffForHumans() }}</span> </td>
+                        </tr>
                     </table>
                     <div class="flex justify-between mt-5">
                         <x-confirmation-warning action="/admin/booking" method="POST" title="Tolak Booking" text="Apa kamu yakin ingin menolak -nya?">
@@ -125,3 +132,4 @@
             
         </div>
 </x-admin.admin-layout>
+

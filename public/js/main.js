@@ -44,11 +44,18 @@ document.addEventListener("alpine:init", () => {
                     )}`;
                 },
                 onPending: function (result) {
-                    console.log(result);
+                    console.log(result.error_messages);
+                    alert("gagal");
                 },
                 onError: function (result) {
                     console.log(result);
-                    window.location.href = `/payment/failed`;
+                    let callback = {
+                        error_msg: result["error_messages"],
+                        error_code: result["status_code"],
+                    };
+                    window.location.href = `/payment/failed/${JSON.stringify(
+                        callback
+                    )}`;
                 },
             });
         },

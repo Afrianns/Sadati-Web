@@ -123,7 +123,7 @@
                 border: none !important;
             }
             .cool-gray {
-                color: #6B7280;
+                color: #5fea5f;
             }
 
             .test{
@@ -153,7 +153,7 @@
                                 <strong>{{ $invoice->status }}</strong>
                             </h4>
                         @endif
-                        <p>{{ __('invoices::invoice.serial') }} <strong>{{ $invoice->getSerialNumber() }}</strong></p>
+                        <p>{{ __('invoices::invoice.serial') }}: <strong>{{ $invoice->getSerialNumber() }}</strong></p>
                         <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
                     </td>
                 </tr>
@@ -365,7 +365,7 @@
 
         @if($invoice->notes)
             <p>
-                {{ __('invoices::invoice.notes') }}: {!! $invoice->notes !!}
+                {{ __('invoices::invoice.notes') }}:<strong> {!! $invoice->notes !!}</strong>
             </p>
         @endif
 

@@ -112,7 +112,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::controller(PaymentController::class)->group(function () {
     Route::get('payment/success/{id}/{data}', 'successPay')->name("payment-success");
     // Route::post('payment/success', 'successPay')->name("payment-success");
-    Route::get('payment/failed', 'failedPay')->name("payment-failed");
+    Route::get('payment/failed/{data}', 'failedPay')->name("payment-failed");
 
     // Payment Invoice
     

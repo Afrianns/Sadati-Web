@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'prewedding',
             'type' => 'bronze',
-            'price' => '2.500.000',
+            'price' => '1250',
+            // 'price' => '2.500.000',
             'description' => json_encode([
                 '1 Photo Location.',
                 '2 Photographer.',
@@ -46,7 +47,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'prewedding',
             'type' => 'silver',
-            'price' => '3.900.000',
+            'price' => '1390',
+            // 'price' => '3.900.000',
             'description' => json_encode([
                 '2 Photo Location.',
                 '2 Photographer.',
@@ -62,7 +64,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'prewedding',
             'type' => 'gold',
-            'price' => '4.900.000',
+            'price' => '1900',
+            // 'price' => '4.900.000',
             'description' => json_encode([
                 '2 Photo Location 1 Day.',
                 '2 Photographer.',
@@ -79,7 +82,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'prewedding',
             'type' => 'diamond',
-            'price' => '7.000.000',
+            'price' => '1700',
+            // 'price' => '7.000.000',
             'description' => json_encode([
                 '2 Day Photo Session.',
                 '2 Photographer + Crew.',
@@ -99,7 +103,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'wedding',
             'type' => 'bronze',
-            'price' => '4.500.000',
+            'price' => '1500',
+            // 'price' => '4.500.000',
             'description' => json_encode([
                 'Cadid Photo.',
                 '2 Photographer.',
@@ -115,7 +120,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'wedding',
             'type' => 'silver',
-            'price' => '6.500.000',
+            'price' => '1650',
+            // 'price' => '6.500.000',
             'description' => json_encode([
                 'Ceremonial, Candid, Family Photo.',
                 'Full Lighting on Stage.',
@@ -134,7 +140,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'wedding',
             'type' => 'gold',
-            'price' => '7.500.000',
+            'price' => '1750',
+            // 'price' => '7.500.000',
             'description' => json_encode([
                 'Ceremonial, Candid, Family Photo.',
                 'Full Lighting on Stage.',
@@ -156,7 +163,8 @@ class DatabaseSeeder extends Seeder
         DB::table('packages')->insert([
             'category' => 'lain-lain',
             'type' => 'Video Dokumentasi',
-            'price' => '950.000',
+            'price' => '1950',
+            // 'price' => '950.000',
             'description' => json_encode([
                 'Max.3 hours',
                 'Video full acara',
@@ -171,7 +179,8 @@ class DatabaseSeeder extends Seeder
             'category' => 'lain-lain',
             'type' => 'bronze',
             'sub_type' => 'wisuda, couple, familly, grup, maternity.',
-            'price' => '185.000',
+            'price' => '1185',
+            // 'price' => '185.000',
             'description' => 
             json_encode([
                 '5 foto edit + 3 foto cetak 10 R',
@@ -186,7 +195,8 @@ class DatabaseSeeder extends Seeder
             'category' => 'lain-lain',
             'type' => 'silver',
             'sub_type' => 'wisuda, couple, familly, grup, maternity.',
-            'price' => '6.500.000',
+            'price' => '1650',
+            // 'price' => '6.500.000',
             'description' => json_encode([
                 '5 foto edit + 5 foto cetak 10 R',
                 '1 cetak+bingkai ukuran 30x45 (12R)',

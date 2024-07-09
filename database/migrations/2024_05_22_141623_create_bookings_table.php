@@ -20,10 +20,11 @@ return new class extends Migration
             $table->date('date');
             $table->time('time');
             $table->boolean('isConfirmed')->nullable();
-            $table->string('token')->unique()->nullable();
             $table->boolean('isFinished')->nullable();
+            $table->string('token')->unique()->nullable();
             $table->text('place');
             $table->text('note')->nullable();
+            $table->text('admin_note')->nullable();
             $table->timestamps();
         });
     }

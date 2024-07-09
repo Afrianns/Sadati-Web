@@ -24,6 +24,7 @@
                 {{-- <x-navlink href='gallery' :url="request()->is('gallery')">Galeri</x-navlink> --}}
                 <x-navlink href='booking' :url="request()->is('booking')">Booking</x-navlink>
                 <x-navlink href='packages' :url="request()->is('packages')">Harga & Paket</x-navlink>
+                <x-navlink href='about-us' :url="request()->is('about-us')">Tentang Kami</x-navlink>
             </div>
             </div>
         </div>

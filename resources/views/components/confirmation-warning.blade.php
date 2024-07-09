@@ -16,7 +16,20 @@
             cancelButtonText: "Batal!",
             confirmButtonText: title
         }).then((result) =>{
-            if (result.isConfirmed){
+            if(title == "Tutup Booking" && result.isConfirmed){
+                Swal.fire({
+                    input: "text",
+                    inputLabel: "Masukan catatan untuk pelanggan (Optional)",
+                    confirmButtonText: 'Kirim',
+                }).then((result_two) => {
+                    if (result_two.isConfirmed){
+                        value.admin_note.value = result_two.value;
+                        value.submit();
+                    }
+                })
+            }
+
+            if (result.isConfirmed && title != "Tutup Booking"){
                 value.submit();
             }
         })

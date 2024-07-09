@@ -153,8 +153,10 @@ class BookingController extends Controller
 
     public function addHistoryPost(Request $request)
     {
+        // dd($request->all());   
         $result = Booking::where("id", $request->booking_id)->update([
-            'isFinished' => true
+            'isFinished' => true,
+            'admin_note' => $request->admin_note
         ]);
 
         if($result){
@@ -180,10 +182,12 @@ class BookingController extends Controller
         if (Gate::denies('admin')){
             return redirect()->back();
         }
+
+        // $this->payment(request('booking_id'));
         
         $result = Booking::where('id', request('booking_id'))->update([
             'isConfirmed' => request('value'),
-            'token' => $this->payment()
+            'token' => $this->payment(request('booking_id'))
         ]);
 
         if($result) {
@@ -213,18 +217,24 @@ class BookingController extends Controller
     }
 
     // payment method
-    public function payment()
+    public function payment(string $id)
     {
+        
+        $result = Booking::find($id);
+        // dd($result->package);
+
         $params = [
             'transaction_details' => [
                 'order_id' => rand(),
-                'gross_amount' => 1000,
+                'type' => $result->package->type,
+                'category' => $result->package->category,
+                'gross_amount' => $result->package->price,
             ],
             'customer_details' => [
-                'first_name' => 'budi',
-                'last_name' => 'pratama',
-                'email' => 'budi.pra@example.com',
-                'phone' => '08111222333',
+                'name' => $result->user->name,
+                'address' => $result->user->address,
+                'email' => $result->user->email,
+                'phone' => $result->user->phone_number,
             ],
 
             // "callbacks" => [

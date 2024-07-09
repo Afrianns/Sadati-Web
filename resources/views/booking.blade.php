@@ -1,4 +1,7 @@
 <x-user.layout :title='$title'>
+    @php
+        $formatter = new NumberFormatter('id_ID',  NumberFormatter::CURRENCY);
+    @endphp
     <x-header-page></x-header-page>
     <div class="flex justify-center items-center lg:items-start pt-32 py-20 lg:flex-row flex-col w-full gap-10">
         <div class="w-full lg:w-2/5 text-center lg:text-left px-10">
@@ -45,7 +48,7 @@
                                         {{ $package->category }}
                                         -
                                     @endif
-                                     IDR {{ $package->price }}</option>
+                                     IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -102,7 +105,6 @@
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            {{-- @if() --}}
                         </th>
                     </tr>
                 </thead>
@@ -176,15 +178,23 @@
                             <td class="border-t-2 border-secondary p-4">
                                 <span class="font-bold">Tempat Acara</span> <p>{{ $book->place }}</p>
                             </td>
-                            <td colspan="2" class="border-t-2 border-secondary py-4">    
+                            <td class="border-t-2 border-secondary py-4">    
                                 <span class="font-bold">Tanggal & Waktu Acara</span> <p class="bg-gray-100 w-fit py-1 px-4 my-1">{{ getDateTime($book->date)->isoFormat('D MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }}</p>
                             </td>
-                            @if($book->payment)
-                            <td class="border-t-2 border-secondary">
-                                <a class="clickable text-green-600 hover:underline" href="/payment/invoice/{{ $book->id }}">Lihat Invoice</a>
-                            </td>
+                            @if($book->admin_note)
+                                <td class="border-t-2 border-secondary">
+                                    <span class="text-gray-500 text-sm">Catatan dari admin:</span>
+                                    <p>{{ $book->admin_note }}</p>
+                                </td>
                             @else
-                            <td class="border-t-2 border-secondary"></td>
+                                <td class="border-t-2 border-secondary"></td>
+                            @endif
+                            @if($book->payment)
+                                <td class="border-t-2 border-secondary">
+                                    <a class="clickable text-green-600 hover:underline" href="/payment/invoice/{{ $book->id }}">Lihat Nota</a>
+                                </td>
+                            @else
+                                <td class="border-t-2 border-secondary"></td>
                             @endif
                         </tr>
                     @endif

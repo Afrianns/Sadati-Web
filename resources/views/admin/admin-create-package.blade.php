@@ -38,7 +38,10 @@
                 <p x-on:click="addField()" class="clickable-styles px-5 bg-black text-white">&plus;</p>
             </div>
             <input type="hidden" name="category" value="{{ $category }}">
-            <button class="button-styles">BOOK</button>
+            <div class="flex justify-between items-center mt-10">
+                <a class="clickable border border-black py-2 px-5" href="/admin/packages">Kembali</a>
+                <button class="clickable bg-secondary text-white py-2 px-5">Tambah Paket</button>
+            </div>
     </form>
 </div>
 </x-admin.admin-layout>

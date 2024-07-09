@@ -8,6 +8,7 @@
             {{-- <li class="cursor-pointer hover:underline"><a href="gallery">Galeri</a></li> --}}
             <li class="cursor-pointer hover:underline"><a href="booking">Booking</a></li>
             <li class="cursor-pointer hover:underline"><a href="packages">Harga & Paket</a></li>
+            <li class="cursor-pointer hover:underline"><a href="about-us">Tentang Kami</a></li>
         </ul>
         <ul class="flex gap-5">
             <li>

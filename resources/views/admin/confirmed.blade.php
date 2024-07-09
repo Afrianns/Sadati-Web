@@ -1,4 +1,7 @@
 <x-admin.admin-layout :title="$title">
+    @php
+        $formatter = new NumberFormatter('id_ID',  NumberFormatter::CURRENCY);
+    @endphp
     @if ($bookings->count() > 0 || $total->count() > 0)
     <div class="flex mb-5 justify-between">
         @php
@@ -80,7 +83,7 @@
 
                             <tr>
                                 <td class="pb-3 pr-5 text-gray-500 font-light">Harga Paket</td>
-                                <td class="pb-3"> IDR {{ $book->package->price }} 
+                                <td class="pb-3"> IDR {{ $formatter->formatCurrency($package->price, 'IDR') }} 
                                     @if($book->payment)
                                         <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terbayar</span>
                                     @else
@@ -112,12 +115,18 @@
                                     <td>{{ $book->note }}</td>
                                 </tr>
                             @endif
+
+                            <tr>
+                                <td class="pt-7 pr-5 text-gray-500 font-light">Diajukan pada</td>
+                                <td class="pt-7 flex items-center gap-2">{{ getDateTime($book->created_at)->format("j F Y") }} <span class="text-xs text-gray-500 bg-gray-200 py-0.5 px-1.5">{{ getDateTime($book->created_at)->diffForHumans(now()) }}</span> </td>
+                            </tr>
                         </table>
 
                         <x-confirmation-warning action="/admin/history" method="POST" title="Tutup Booking" text="Apa kamu yakin ingin Menutup -nya?">
                             @csrf
                             @method('patch')
                             <input type="hidden" name="booking_id" value="{{ $book->id }}">
+                            <input type="hidden" name="admin_note" value="">
                             <button class="bg-red-500 text-white py-1 px-4 mt-5">Tutup</button>
                         </x-confirmation-warning>
                     </div>

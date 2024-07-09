@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
@@ -14,7 +15,6 @@ use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class PaymentController extends Controller
 {
-
     public function successPay(string $id, string $data)
     {
         $data_decode = json_decode($data);
@@ -50,20 +50,17 @@ class PaymentController extends Controller
         // return $result;
     }
 
-    public function failedPay()
+    public function failedPay(string $data)
     {
-        toast('Pembayaraan Gagal', 'error');
-        return view('booking');
+        toast('Pembayaraan Gagal <br> Silahkan coba lagi atau buat reservasi baru', 'error');
+        return redirect('/booking');
     }
 
 
     public function invoice(Request $request)
     {
-
-
-        
         $result = Booking::find($request['id']);
-        $buyedPackage = "" . $result->package->category ."-". $result->package->type."";
+        $buyedPackage = "" . $result->package->category ." - ". $result->package->type."";
         
         // dd($result->user, $result->payment, $result->package);
         
@@ -82,11 +79,15 @@ class PaymentController extends Controller
             ],
         ]);
 
+        $inital = new Carbon($result->payment->transaction_time);
+        $date = $inital->isoFormat('DD MMMM Y');
+
         $item = InvoiceItem::make($buyedPackage)->quantity(1)->pricePerUnit($result->payment->gross_amount);
 
         $invoice = Invoice::make()
             ->buyer($customer)
             ->notes($notes)
+            ->date($inital)
             ->status('Terbayar')
             ->addItem($item);
 

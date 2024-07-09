@@ -1,4 +1,7 @@
 <x-admin.admin-layout :title="$title">
+    @php
+        $formatter = new NumberFormatter('id_ID',  NumberFormatter::CURRENCY);
+    @endphp
     <div class="flex justify-between items-center">
         <a href="/admin/packages/create/{{ request()->get('category') }}" class="clickable bg-white py-1 px-5 border border-gray-300">Tambah</a>
         <div class="w-fit text-gray-500 text-xs">
@@ -31,7 +34,6 @@
         </ul>
     </div>
     @endforeach
-
     @foreach ($packages as $package)
     @if($package->category == $category)
     <div class="border border-gray-300 rounded-md mb-5 bg-gray-50 shadow-sm">
@@ -53,8 +55,8 @@
                         <h2 class="font-bold font-Mohave text-secondary text-2xl uppercase" x-show="!edit">{{ $package->type }}</h2>
                         <input type="text" x-show="edit" x-cloak class="input-styles mb-2" name="type-edit" value="{{ $package->type }}"></input> 
                         {{-- price --}}
-                        <input type="text" x-show="edit" x-cloak class="input-styles" name="price-edit" value="{{ $package->price }}"></input> 
-                        <span class="text-gray-500" x-show="!edit">IDR {{ $package->price }}</span>
+                        <input type="number" x-show="edit" x-cloak class="input-styles" name="price-edit" value="{{ $package->price }}"></input> 
+                        <span class="text-gray-500" x-show="!edit">IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
                     </div>
 
                     <svg x-on:click="open = !open, edit = false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-black w-9 p-2 cursor-pointer hover:bg-gray-50"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
