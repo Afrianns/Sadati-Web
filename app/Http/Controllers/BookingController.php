@@ -170,9 +170,27 @@ class BookingController extends Controller
 
     public function history()
     {
-        $result = Booking::with('user','package')->where("isFinished", true)->get();
-        // dd($result);
-        return view('admin/history', ['title' => "Riwayat",'completedBooks' => $result]);
+
+        // check if parameter if exist or not
+        if(!isset($_GET['Ptype'])){
+            $type = 'paid';
+        } else{
+            $type = $_GET['Ptype'];
+        }
+
+        $result = Booking::with('user','package','payment')->where("isFinished", true);
+
+        // count the total without parameter included
+        $count = $result->get();
+
+        // add method that match with parameter
+        if($type == 'paid'){
+            $result = $result->has('payment');
+        } else{
+            $result = $result->doesntHave('payment');
+        }
+        $result = $result->get();
+        return view('admin/history', ['title' => "Riwayat",'completedBooks' => $result,'total' => $count]);
     }
 
 

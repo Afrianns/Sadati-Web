@@ -26,6 +26,8 @@ Route::get("/gallery", function () {
     return view('gallery', ['title' => 'Galeri']);
 });
 
+Route::view('/about-us','about-us',['title' => 'Tentang Kami']);
+
 // w/ booking user data if user login & exist
 Route::get('/booking', [BookingController::class,'booking']);
 

@@ -18,7 +18,7 @@ return [
     'phone'                  => 'Nomor Telepon',
     'description'            => 'Diskripsi',
     'units'                  => 'Unit',
-    'quantity'               => 'Quantiti',
+    'quantity'               => 'Kuantitas',
     'price'                  => 'Harga',
     'discount'               => 'Diskon',
     'tax'                    => 'Pajak',
