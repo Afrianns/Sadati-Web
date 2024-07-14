@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
@@ -17,7 +18,7 @@ class MailableVerification extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(private $name)
+    public function __construct(private $name, private $file_name)
     {
         //
     }
@@ -28,7 +29,8 @@ class MailableVerification extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verifikasi Akun',
+            from: new Address("mynamehanif1@gmail.com", 'Sadati Photography'),
+            subject: 'Nota Pembayaran Paket',
         );
     }
 
@@ -50,6 +52,8 @@ class MailableVerification extends Mailable implements ShouldQueue
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            Attachment::fromPath(public_path("/storage/" . $this->file_name))
+        ];
     }
 }

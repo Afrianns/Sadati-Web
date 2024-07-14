@@ -10,7 +10,7 @@ class Payment extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['booking_id','transaction_id','order_id','gross_amount','payment_type','transaction_time','transaction_status'];
+    protected $fillable = ['booking_id','transaction_id','order_id','gross_amount','payment_type','transaction_time','transaction_status','file_name'];
 
     public function booking() : BelongsTo
     {

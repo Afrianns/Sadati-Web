@@ -46,7 +46,6 @@
                                         @endif
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
                                     <td class="pb-2"> 

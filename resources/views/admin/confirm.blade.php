@@ -37,7 +37,7 @@
                 }
             @endphp
             @foreach ($bookings as $book)
-            <section class="bg-white py-5 px-6 border border-gray-300 shadow-sm" x-data="{toggle: false}">
+            <section class="bg-white py-5 px-6 border border-gray-300 shadow-sm mb-5" x-data="{toggle: false}">
                 <div class="flex justify-between items-center">
                     <div>
                         <span class="text-xs text-gray-500 bg-gray-200 py-0.5 px-1.5">{{ getDateTime($book->date . $book->time)->diffForHumans() }}</span>
@@ -67,7 +67,7 @@
                         
                         <tr>
                             <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
-                            <td class="pb-2"> IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</td>
+                            <td class="pb-2"> IDR {{ $formatter->formatCurrency($book->package->price, 'IDR') }}</td>
                         </tr>
                         {{-- <tr>
                             <td class="py-1 bg-gray-50 text-center text-sm" colspan="2">Waktu & Tempat</td>

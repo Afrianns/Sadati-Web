@@ -73,7 +73,6 @@ return [
     ],
 
     'disk' => 'local',
-    'lang' => 'fr',
 
     'seller' => [
         /*

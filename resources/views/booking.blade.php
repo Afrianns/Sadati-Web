@@ -191,7 +191,7 @@
                             @endif
                             @if($book->payment)
                                 <td class="border-t-2 border-secondary">
-                                    <a class="clickable text-green-600 hover:underline" href="/payment/invoice/{{ $book->id }}">Lihat Nota</a>
+                                    <a class="clickable text-green-600 hover:underline" href="/storage/{{ $book->payment->file_name }}">Lihat Nota</a>
                                 </td>
                             @else
                                 <td class="border-t-2 border-secondary"></td>

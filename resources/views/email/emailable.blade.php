@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Verification</title>
+    <title>Nota Pembelian</title>
     <style>
         main{
             /* border: 1px solid gray; */
@@ -22,11 +22,9 @@
 <body>
     <main>
         <h1>Hello, {{ $name }}</h1>
-        <p>Terimakasih sudah mendaftar, berikut link untuk mengaktifkan akun anda</p>
-        <p class="link">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum ad doloribus dolorum, non quasi eum ipsam blanditiis, modi ea, harum aperiam beatae eius. Obcaecati minus maxime nesciunt placeat! Soluta, exercitationem. s</p>
-
-        <p>Terimakasih</p>
-        <span><i>Tim P</i></span>
+        <p>Berikut merupakan bukti nota pembayaran paket anda</p>
+        <p>Terimakasih sudah menggunakan jasa kami</p>
+        <span><i>Sadati Photography</i></span>
     </main>
 </body>
 </html>

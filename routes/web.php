@@ -85,8 +85,8 @@ Route::prefix('admin')->controller(BookingController::class)->group(function() {
 // Route::get('/admin', [BookingController::class,'index'])->middleware(admin::class);
 
 
-
-// Route::get('test', function() {
+// Send Invoice to user after finished pay
+// Route::get('sendingpay', function() {
 //     Mail::to('hanifnandaafrian9@gmail.com')->send(new MailableVerification("Alex"));
 // });
 
@@ -118,5 +118,5 @@ Route::controller(PaymentController::class)->group(function () {
 
     // Payment Invoice
     
-    Route::get('/payment/invoice/{id}', 'invoice');
+    // Route::get('/payment/invoice/{id}', 'invoice');
 });

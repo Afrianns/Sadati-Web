@@ -9,18 +9,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
 use Midtrans\Snap;
+use App\Mail\MailableVerification;
+use Illuminate\Support\Facades\Mail;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class PaymentController extends Controller
 {
-    public function successPay(string $id, string $data)
+    public function successPay(string $booking_id, string $data)
     {
+        // store the array to database
         $data_decode = json_decode($data);
 
         if($data_decode->status_code == 200){
-
+            
+            $file_name = $this->invoice($booking_id, $data_decode->transaction_time, $data_decode->gross_amount);
+            
                 $array_data = [
                     'transaction_id' => $data_decode->transaction_id,
                     'order_id' => $data_decode->order_id,
@@ -28,26 +33,21 @@ class PaymentController extends Controller
                     'payment_type' => $data_decode->payment_type,
                     'transaction_time' => $data_decode->transaction_time,
                     'transaction_status' => $data_decode->transaction_status,
-                    'booking_id' => $id,
+                    'booking_id' => $booking_id,
+                    'file_name' => $file_name,
             ];
             
             $result = Payment::create($array_data);
 
             if($result){
-                toast($data_decode->status_message,'success');
+                toast('Transaksi berhasil','success');
             }
         }
+
+
+        Mail::to(auth()->user()->email)->send(new MailableVerification(auth()->user()->name, $file_name));
         
         return redirect('/booking');
-        // Log::info(json_encode($data->all()));
-        // return response()->json(['data' => $data->all()]);
-        // $result = Booking::where('id', $id)->update(['status' => 'Berhasil']);
-
-        // if($result){
-        //     toast('Pembayaraan berhasil', 'success');
-        // }
-        
-        // return $result;
     }
 
     public function failedPay(string $data)
@@ -57,13 +57,11 @@ class PaymentController extends Controller
     }
 
 
-    public function invoice(Request $request)
+    public function invoice(string $booking_id, string $transaction_time, string $gross_amount)
     {
-        $result = Booking::find($request['id']);
+        $result = Booking::find($booking_id);
         $buyedPackage = "" . $result->package->category ." - ". $result->package->type."";
-        
-        // dd($result->user, $result->payment, $result->package);
-        
+                
         $notes = [
             'Trimakasih sudah menggunakan jasa kami',
             'Sadati Photography',
@@ -79,18 +77,21 @@ class PaymentController extends Controller
             ],
         ]);
 
-        $inital = new Carbon($result->payment->transaction_time);
-        $date = $inital->isoFormat('DD MMMM Y');
+        $inital = new Carbon($transaction_time);
+        $date = $inital->isoFormat('DD MMMM Y h-m-s');
 
-        $item = InvoiceItem::make($buyedPackage)->quantity(1)->pricePerUnit($result->payment->gross_amount);
+        $file_name = str_replace(' ','_',$result->user->name . '_' . $date);
+        $item = InvoiceItem::make($buyedPackage)->quantity(1)->pricePerUnit($gross_amount);
 
         $invoice = Invoice::make()
             ->buyer($customer)
             ->notes($notes)
             ->date($inital)
             ->status('Terbayar')
-            ->addItem($item);
+            ->addItem($item)
+            ->filename($file_name)
+            ->save('public');
 
-        return $invoice->stream();
+        return $invoice->filename;
     }
 }

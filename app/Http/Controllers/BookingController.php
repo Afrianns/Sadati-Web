@@ -8,6 +8,8 @@ use App\Models\User;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
 
 use Illuminate\Support\Facades\Gate;
 
@@ -99,6 +101,7 @@ class BookingController extends Controller
             }
 
             $result = $result->get();
+            // dd($result);
             return view("admin/confirm", ['title' => 'BUTUH KONFIRMASI', 'bookings' => $result]);
 
         } else{   
@@ -226,7 +229,15 @@ class BookingController extends Controller
     public function delete_by_user()
     {
 
-        $result = Booking::where('id', request('booking_id'))->delete();
+
+        $result = Booking::find(request('booking_id'));
+        
+        // delete the file
+        File::delete("storage/" . $result->payment->file_name);
+        
+        // delete the booking
+        $result->delete();
+
         if ($result){
             toast("Data booking berhasil dihapus", 'success');
             return redirect()->back();

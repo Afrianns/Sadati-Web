@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('booking_id');
+            $table->foreignId('booking_id')->constrained()->onDelete('cascade');
             $table->string('transaction_id');
             $table->string('order_id')->unique();
             $table->string('gross_amount');
             $table->string('payment_type');
             $table->string('transaction_time');
             $table->string('transaction_status');
+            $table->string("file_name");
             $table->timestamps();
         });
     }
