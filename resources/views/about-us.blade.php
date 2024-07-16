@@ -6,7 +6,7 @@
                     Tentang Kami, Sadati Photography. 
                 </h3>
             </div>
-            <img class="bg-red-50 w-full h-full object-cover" src="images/image1.png" alt="">    
+            <img class="bg-red-50 w-full h-full object-cover" src="images/image01.jpg" alt="">    
         <span class="bg-black absolute left-0 right-0 bottom-0 top-0 opacity-70"></span>
         </section>
 

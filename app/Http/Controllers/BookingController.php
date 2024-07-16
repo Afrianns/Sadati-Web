@@ -95,9 +95,9 @@ class BookingController extends Controller
             $result = Booking::with(['user','package'])->where('isConfirmed', null);
             
             if($param == 'terbaru'){
-                $result = $result->orderBy("created_at",'asc'); 
+                $result = $result->orderBy("created_at",'desc'); 
             } else {
-                $result = $result->orderBy("created_at", 'desc'); 
+                $result = $result->orderBy("created_at", 'asc'); 
             }
 
             $result = $result->get();
@@ -233,7 +233,11 @@ class BookingController extends Controller
         $result = Booking::find(request('booking_id'));
         
         // delete the file
-        File::delete("storage/" . $result->payment->file_name);
+        if($result->payment){
+            if(File::exists("storage/" . $result->payment->file_name)){
+                File::delete("storage/" . $result->payment->file_name);
+            }
+        }
         
         // delete the booking
         $result->delete();

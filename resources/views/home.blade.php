@@ -10,7 +10,7 @@
                     Mulai Sekarang
                 </x-btn-link>
             </div>
-            <img class="bg-red-50 md:w-7/12 h-full object-cover" src="images/image1.png" alt="">
+            <img class="bg-red-50 md:w-7/12 h-full object-cover" src="images/image1.jpg" alt="">
         </section>
         <section class="flex max-md:flex-col-reverse items-center w-full md:h-[28rem] gap-x-5 lg:gap-x-10">
             <div class="md:w-5/12 max-md:py-16 mr-5 space-y-7 text-black">
@@ -23,10 +23,10 @@
                 </x-btn-link>
 
             </div>
-            <img class="object-cover md:w-7/12 h-full" src="images/image2.png" alt="">
+            <img class="object-cover md:w-7/12 h-full" src="images/image2.jpg" alt="">
         </section>
         <section class="flex max-md:flex-col items-center gap-x-5 lg:gap-x-10 md:h-[28rem]">
-            <img class="object-cover md:w-7/12 h-full" src="images/image3.png" alt="">
+            <img class="object-cover md:w-7/12 h-full" src="images/image3.jpg" alt="">
             <div class="md:w-5/12 p-7 max-md:py-16 bg-black space-y-7 h-full my-auto place-content-center">
                 <h3 class="text-2xl lg:text-4xl font-bold uppercase font-Mohave">
                     Berbagai Paket dan Harga yang bervariasi.
@@ -55,7 +55,7 @@
                         <h3 class="info-title">GRADUATION</h3>
                         <p class="description">Abadikan momen pencapaian kelulusan anda untuk dinikmati setiap saat</p>
                     </div>
-                    <img class="img-style" src="images/image4.png" alt="">
+                    <img class="img-style" src="images/categories/graduation.jpg" alt="">
                 </div>
             </div>
             <div class="overflow-hidden w-full relative group">
@@ -64,7 +64,7 @@
                         <h3 class="info-title">PREWEDDING</h3>
                         <p class="description">Abadikan kisah cinta Anda dalam sesi prewedding yang romantis dan penuh kenangan.</p>
                     </div>
-                    <img class="img-style" src="images/image5.png" alt="">
+                    <img class="img-style" src="images/categories/prewedding.jpg" alt="">
                 </div>
             </div>
             <div class="overflow-hidden w-full relative group">
@@ -73,7 +73,7 @@
                         <h3 class="info-title">WEDDING</h3>
                         <p class="description">Abadikan Hari bahagia dengan momen yang tak terlupakan dalam foto yang abadi.</p>
                     </div>
-                    <img class="img-style" src="images/image6.png" alt="">
+                    <img class="img-style" src="images/categories/wedding.jpg" alt="">
                 </div>
             </div>
             <div class="overflow-hidden w-full relative group">
@@ -82,7 +82,7 @@
                         <h3 class="info-title">FAMILY</h3>
                         <p class="description">Jadikan momen bersama keluarga menjadi kenangan indah yang bisa dikenang sepanjang masa.</p>
                     </div>
-                    <img class="img-style" src="images/image7.png" alt="">
+                    <img class="img-style" src="images/categories/family.jpg" alt="">
                 </div>
             </div>        
         </section>

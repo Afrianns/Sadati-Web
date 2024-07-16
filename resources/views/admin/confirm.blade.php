@@ -4,7 +4,7 @@
     @endphp
     @if ($bookings->count() > 0)
         <div class="ml-auto w-fit text-gray-500 text-xs space-y-2 mb-5">
-            <p>Pilih Kategori</p>
+            <p>Urutkan Berdasarkan</p>
             <div class="text-gray-500 flex gap-x-2 items-center">
                 <a href="?sort=terbaru">
                     <x-admin.admin-navlink :url="request()->get('sort') == 'terbaru' || request()->get('sort') == ''" class="link-btn-filter">
@@ -19,7 +19,7 @@
             </div>
         </div>
     @endif
-        <div class="space-y-5">
+        <div class="space-y-5 mb-5">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
