@@ -18,15 +18,16 @@
             @error('name')
                 <p class="text-red-400 italic mt-2 text-sm">{{ $message }}</p>
             @enderror
-            <div class="mt-3">
+            {{-- <div class="mt-3">
                 <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
                 <div class="mt-2">
                     <input type="email" name="email" id="email" class="input-styles" value="{{$user->email}}" placeholder="E.g. example@mail.com">
                 </div>
             </div>
             @error('email')
-                <p class="text-red-400 italic mt-2 text-sm">{{ $message }}</p>
-            @enderror
+            <p class="text-red-400 italic mt-2 text-sm">{{ $message }}</p>
+            @enderror 
+            --}}
             <div class="mt-3">
                 <label for="address" class="block text-sm font-medium leading-6 text-gray-900">Alamat</label>
                 <div class="mt-2">

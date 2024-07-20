@@ -4,21 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Mail\MailableVerification;
 use Illuminate\Support\Facades\Mail;
 
 
 class UserController extends Controller
 {
-    
-
-
     public function login() 
     {   
         return view("Auth/login");
@@ -100,14 +97,12 @@ class UserController extends Controller
     {
         request()->validate([
             'name' => ['required', 'min:3'],
-            'email' => ['required','email:dns', Rule::unique('users')->ignore(Auth()->user()->id)],
             'address' => ['required','min:3'],
             'phone_number' => ['required','min:10'],
         ]);
         
         $user = User::where('id', Auth()->user()->id)->update([
             'name' => request('name'),
-            'email' => request('email'),
             'address' => request('address'),
             'phone_number' => request('phone_number')
         ]);

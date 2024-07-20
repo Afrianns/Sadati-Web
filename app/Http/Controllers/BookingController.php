@@ -229,7 +229,6 @@ class BookingController extends Controller
     public function delete_by_user()
     {
 
-
         $result = Booking::find(request('booking_id'));
         
         // delete the file

@@ -84,7 +84,7 @@ class PackageController extends Controller
         $result = Package::create([
             'category' => $validatedItem['category'],
             'type' => $validatedItem['type'],
-            'price' => Number_format($validatedItem['price']),
+            'price' => $validatedItem['price'],
             'sub_type' => $request->sub_type,
             'description' => json_encode($validatedItem['desc'])
         ]);
