@@ -1,5 +1,4 @@
 <x-admin.admin-layout :title="$title">
-    {{-- @if($total->count() > 0) --}}
         @php
             $formatter = new NumberFormatter('id_ID',  NumberFormatter::CURRENCY);
         @endphp
@@ -9,7 +8,6 @@
                 <section class="bg-white py-5 px-6 border border-gray-300 shadow-sm" x-data="{open: false}">
                     <div class="flex justify-between items-center">
                         <div>
-                            
                             @if(!$book->isConfirmed)    
                                 <span class="bg-red-200 text-orange-900 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">Ditolak</span>
                             @else
@@ -19,8 +17,6 @@
                                 @else
                                     <span class="bg-orange-200 text-orange-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">tidak dibayar</span>
                                 @endif
-                                    
-
                             @endif
                             <div class="flex gap-2 mt-2">
                                 <p class="text-medium font-medium">{{ $book->user->name }}</p>
@@ -93,10 +89,7 @@
                 </section>
             @endforeach
             @else
-                <h1 class="text-center font-Mohave text-gray-600">Ooops.. Belum ada riwayat booking sesuai.</h1>
+                <h1 class="text-center font-Mohave text-gray-600">Ooops.. Belum ada riwayat reservasi.</h1>
                 @endif
             </div>
-    {{-- @else
-        <h1 class="text-center font-Mohave text-gray-600">Tidak ada riwayat booking.</h1>
-    @endif --}}
 </x-admin.admin-layout>
