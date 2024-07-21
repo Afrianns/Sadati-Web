@@ -27,7 +27,7 @@ class BookingController extends Controller
         // Set 3DS transaction for credit card to true
         Config::$is3ds = env('IS_3DS');
 
-        Config::$overrideNotifUrl = 'https://www.google.com';
+        // Config::$overrideNotifUrl = 'https://www';
     }
 
     // redirect user admin to unconfirmed bookings page
@@ -163,9 +163,9 @@ class BookingController extends Controller
         ]);
 
         if($result){
-            toast('Berhasil diperbarui <br> bisa dicek di daftar riwayat', 'success');
+            toast('Berhasil Ditutup <br> bisa dicek di daftar riwayat', 'success');
         } else{            
-            toast('Gagal diperbarui', 'error');
+            toast('Gagal Ditutup', 'error');
         }
 
         return redirect('admin/confirmed');
@@ -175,25 +175,15 @@ class BookingController extends Controller
     {
 
         // check if parameter if exist or not
-        if(!isset($_GET['Ptype'])){
-            $type = 'paid';
-        } else{
-            $type = $_GET['Ptype'];
-        }
+        // if(!isset($_GET['Ptype'])){
+        //     $type = 'paid';
+        // } else{
+        //     $type = $_GET['Ptype'];
+        // }
 
-        $result = Booking::with('user','package','payment')->where("isFinished", true);
+        $result = Booking::where("isFinished", true)->orWhere("isConfirmed", false);
 
-        // count the total without parameter included
-        $count = $result->get();
-
-        // add method that match with parameter
-        if($type == 'paid'){
-            $result = $result->has('payment');
-        } else{
-            $result = $result->doesntHave('payment');
-        }
-        $result = $result->get();
-        return view('admin/history', ['title' => "Riwayat",'completedBooks' => $result,'total' => $count]);
+        return view('admin/history', ['title' => "Riwayat",'completedBooks' => $result->get()]);
     }
 
 
@@ -204,11 +194,18 @@ class BookingController extends Controller
             return redirect()->back();
         }
 
+        $token = null;
+
+        // if reservation get acc then call payment token
+        if(request("value") == 1){
+            $token = $this->payment(request('booking_id'));
+        }
+
         // $this->payment(request('booking_id'));
-        
         $result = Booking::where('id', request('booking_id'))->update([
             'isConfirmed' => request('value'),
-            'token' => $this->payment(request('booking_id'))
+            'token' => $token,
+            'admin_note' => request('admin_note')
         ]);
 
         if($result) {

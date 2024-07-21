@@ -106,11 +106,12 @@
                         </tr>
                     </table>
                     <div class="flex justify-between mt-5">
-                        <x-confirmation-warning action="/admin/booking" method="POST" title="Tolak Booking" text="Apa kamu yakin ingin menolak -nya?">
+                        <x-confirmation-warning action="/admin/booking" method="POST" title="Tutup Booking" text="Apa kamu yakin ingin menolak -nya?">
                             @csrf
                             @method('patch')
                             <input type="hidden" name="value" value="0">
                             <input type="hidden" name="booking_id" value="{{ $book->id }}">
+                            <input type="hidden" name="admin_note" value="">
                             <button class="text-red-600 py-2 px-4">Tolak</button>
                         </x-confirmation-warning>
 

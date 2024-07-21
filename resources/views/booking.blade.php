@@ -116,7 +116,7 @@
                 @endphp
                 @foreach ($bookings as $book)
                 <tbody class="border-[#f0f0f0] border-y-8" x-data="{ expand: false }">
-                    @if ($book->isConfirmed)
+                    @if ($book->isConfirmed || $book->admin_note)
                         <tr class="bg-white hover:bg-gray-50 cursor-pointer" x-on:click="expand = !expand">
                     @else
                         <tr class="bg-white hover:bg-gray-50">
@@ -160,7 +160,7 @@
                                     @endif
                                 </td>
                             @else
-                                <td>
+                                <td class="px-6 py-4 align-top">
                                     <p>Booking ditutup</p>
                                 </td>
                                 <td>
@@ -196,6 +196,14 @@
                             @else
                                 <td class="border-t-2 border-secondary"></td>
                             @endif
+                        </tr>
+                    @elseif($book->admin_note)
+                        <tr class="bg-white border-b-8 border-[#F0F0F0]" x-show="expand" x-cloak>
+                            <td class="border-t-2 p-4 border-secondary">
+                                <span class="text-gray-500 text-sm">Catatan dari admin:</span>
+                                <p>{{ $book->admin_note }}</p>
+                            </td>
+                            <td colspan="3" class="border-t-2 p-4 border-secondary"></td>
                         </tr>
                     @endif
                 </tbody>

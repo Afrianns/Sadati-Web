@@ -103,6 +103,18 @@ document.addEventListener("alpine:init", () => {
             this.fields.splice(index, 1);
         },
     }));
+
+    Alpine.data("filter", () => ({
+        isClick: 0,
+
+        isClicked() {
+            if (this.isClick == 0) {
+                this.isClick = 1;
+            } else {
+                this.isClick = 0;
+            }
+        },
+    }));
 });
 
 // result value
