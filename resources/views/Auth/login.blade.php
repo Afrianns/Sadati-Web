@@ -1,10 +1,10 @@
 <x-user.header></x-user.header>
-<div class="grid place-content-center min-h-screen">
-    <div class="flex justify-between items-center mt-6">
+<div class="grid sm:place-content-center min-h-screen max-sm:content-center w-full">
+    <div class="flex justify-between items-center mt-6 mx-2">
         <h2 class="title">Login.</h2>
         <a href="/" class="hover:underline text-sm font-light text-gray-500 block text-right">Beranda.</a>
     </div>
-    <section class="bg-white shadow w-96 p-7 my-5">
+    <section class="bg-white shadow sm:w-96 p-7 my-5">
         <form action="login" method="post">
             @csrf
             <div class="mt-3">

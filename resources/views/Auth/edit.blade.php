@@ -1,10 +1,10 @@
 <x-user.header></x-user.header>
-<div class="grid place-content-center min-h-screen">
-    <div class="flex justify-between items-center mt-6">
+<div class="grid sm:place-content-center sm:min-h-screen w-full">
+    <div class="flex justify-between items-center mt-6 mx-3">
         <h2 class="title">Edit Data Diri.</h2>
         <a href="/" class="hover:underline text-sm font-light text-gray-500 block text-right">Beranda.</a>
     </div>
-    <section class="bg-white shadow w-[35rem] py-9 px-10 my-5 space-y-10">
+    <section class="bg-white shadow sm:w-[35rem] py-9 px-10 my-5 space-y-10">
         <form action="/personal-data-edit" method="post">
             @method('patch')
             @csrf
@@ -52,8 +52,8 @@
             </div>
         </form> 
     </section>
-    <h1 class="title mt-6">Edit Password.</h1>
-    <section class="bg-white shadow w-[35rem] py-9 px-10 my-5 space-y-10">
+    <h1 class="title mt-6 mx-3">Edit Password.</h1>
+    <section class="bg-white shadow sm:w-[35rem] py-9 px-10 my-5 space-y-10">
         <form action="/password-edit" method="post">
             @method('patch')
             @csrf

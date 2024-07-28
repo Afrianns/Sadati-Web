@@ -26,9 +26,9 @@ class UserController extends Controller
         return view("Auth/register");
     }
 
-    public function store(){
+    public function store(Request $request){
 
-        request()->validate([
+        $request->validate([
             'name' => ['required'],
             'email' => ['required','email:dns','unique:users'],
             'address' => ['required'],
@@ -54,9 +54,9 @@ class UserController extends Controller
     }
 
 
-    public function auth()
+    public function auth(Request $request)
     {
-        $user = request()->validate([
+        $user = $request->validate([
             'email' => ['required','email:dns'],
             'password' => ['required','min:3'],
         ]); 
@@ -69,7 +69,7 @@ class UserController extends Controller
             //     return redirect('/login');
             // }
             
-            request()->session()->regenerate();
+            $request->session()->regenerate();
             
             // if account is normal user or admin
             if(!Auth::user()->isAdmin){
@@ -93,9 +93,9 @@ class UserController extends Controller
         return view("auth/edit", ['user' => $user]);
     }
 
-    public function personal_data_edit()
+    public function personal_data_edit(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'name' => ['required', 'min:3'],
             'address' => ['required','min:3'],
             'phone_number' => ['required','min:10'],
@@ -115,16 +115,16 @@ class UserController extends Controller
 
     }
 
-    public function password_edit()
+    public function password_edit(Request $request)
     {
-        request()->validate([
+        $request->validate([
             'old_password' => ['required','min:3'],
-            'password' => ['required','confirmed'],
+            'password' => ['required','confirmed', "min:3"],
         ]);
 
 
         if(Hash::check(request('old_password'), Auth()->user()->password)){
-            User::where('id', Auth()->user()->id)->update(['password' => Hash::make(request()->password)]);
+            User::where('id', Auth()->user()->id)->update(['password' => Hash::make($request->password)]);
 
             toast('Password berhasil diperbarui','success');
             return redirect('/');

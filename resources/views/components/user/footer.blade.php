@@ -1,11 +1,10 @@
 <footer class="bg-black text-white">
-    <section class="mdm:h-32 flex max-mdm:flex-col justify-between items-center mx-auto max-w-7xl gap-10 py-10 px-4 sm:px-6 lg:px-8">
+    <section class="min-mdm:h-32 flex max-mdm:flex-col justify-between items-center mx-auto max-w-7xl gap-10 py-10 px-4 sm:px-6 lg:px-8">
         <h2 class="brand-title">
             SADATI
         </h2>
-        <ul class="flex gap-5 text-gray-300">
+        <ul class="flex gap-5 text-gray-300 max-sm:flex-col max-sm:text-center">
             <li class="cursor-pointer hover:underline"><a href="/">Beranda</a></li>
-            {{-- <li class="cursor-pointer hover:underline"><a href="gallery">Galeri</a></li> --}}
             <li class="cursor-pointer hover:underline"><a href="booking">Booking</a></li>
             <li class="cursor-pointer hover:underline"><a href="packages">Harga & Paket</a></li>
             <li class="cursor-pointer hover:underline"><a href="about-us">Tentang Kami</a></li>

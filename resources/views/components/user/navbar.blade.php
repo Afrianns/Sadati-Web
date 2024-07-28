@@ -21,7 +21,6 @@
             <div class="hidden lgm:block">
             <div class="ml-10 flex items-baseline space-x-4">
                 <x-navlink href='/' :url="request()->is('/')">Beranda</x-navlink>
-                {{-- <x-navlink href='gallery' :url="request()->is('gallery')">Galeri</x-navlink> --}}
                 <x-navlink href='booking' :url="request()->is('booking')">Booking</x-navlink>
                 <x-navlink href='packages' :url="request()->is('packages')">Harga & Paket</x-navlink>
                 <x-navlink href='about-us' :url="request()->is('about-us')">Tentang Kami</x-navlink>
@@ -49,7 +48,7 @@
                             @endcan
                             <form action="logout" method="POST">
                                 @csrf
-                                <button class="block px-4 py-2 text-sm text-gray-700">logout</button>
+                                <button class="block px-4 py-2 text-sm text-red-500">logout</button>
                             </form>
                         </div>
                     </div>
@@ -73,9 +72,9 @@
 <div :class="{ 'block' : open, ' hidden' : !open}" class="lgm:hidden" id="mobile-menu">
     <div class="px-2 pb-3 pt-2 sm:px-3">
         <x-navlink href='/' :url="request()->is('/')">Home</x-navlink>
-        <x-navlink href='gallery' :url="request()->is('gallery')">Gallery</x-navlink>
         <x-navlink href='booking' :url="request()->is('booking')">Booking</x-navlink>
-        <x-navlink href='about' :url="request()->is('about')">About</x-navlink>
+        <x-navlink href='packages' :url="request()->is('packages')">Harga & Paket</x-navlink>
+        <x-navlink href='about-us' :url="request()->is('about-us')">Tentang Kami</x-navlink>
     </div>
     @if (Auth::user())
     <div class="p-3">
@@ -84,7 +83,7 @@
             <a href="#" class="navlink-user">Profil</a>
             <form action="logout" method="POST" class="inline-block">
                 @csrf
-                <button class="navlink-user">logout</button>
+                <button class="navlink-user text-red-500">logout</button>
             </form>
         </div>
     </div>

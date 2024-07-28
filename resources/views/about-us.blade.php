@@ -1,8 +1,8 @@
 <x-user.layout :title='$title'>
-    <div class="mx-5 md:mx-10 text-gray-800">
-        <section class="relative flex max-md:flex-col-reverse items-center w-full md:h-[18rem] bg-black border-x-4 border-secondary">
+    <div class="mx-2 sm:mx-5 md:mx-10 text-gray-800">
+        <section class="h-[18rem] relative flex max-md:flex-col-reverse items-center w-full bg-black border-x-4 border-secondary">
             <div class="absolute ml-2 px-5 w-full max-md:py-16 space-y-7 lg:space-y-7 z-10">
-                <h3 class="font-bold text-2xl lg:text-4xl uppercase font-Mohave text-center text-white">
+                <h3 class="font-Mohave text-4xl font-bold uppercase py-10 text-center text-white">
                     Tentang Kami, Sadati Photography. 
                 </h3>
             </div>
@@ -10,13 +10,15 @@
         <span class="bg-black absolute left-0 right-0 bottom-0 top-0 opacity-70"></span>
         </section>
 
-        <section class="py-10 space-y-3">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto vero, assumenda maxime temporibus commodi, placeat dicta sunt deleniti recusandae nesciunt possimus nobis blanditiis ipsum asperiores voluptates minus modi. Voluptas, minima?</p>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit laborum vero amet vel soluta. Placeat laborum quam commodi dolor ullam aut praesentium, voluptatum, perspiciatis velit iusto, molestias consequuntur beatae quis ipsam? Ducimus repudiandae ex, recusandae repellat maiores magnam assumenda placeat.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto enim assumenda architecto, dolor explicabo error illum tempora maxime quam eligendi debitis molestias, eaque sapiente et sint. Adipisci saepe ex velit et sunt officia fugiat voluptates, cum voluptatibus ratione totam reprehenderit, illum voluptatum tempora quos beatae quod blanditiis temporibus tempore nobis.</p>
-        </section>
-
-        <section class="py-10 gap-2 grid grid-cols-2 md:grid-cols-3 w-full md:w-2/3 mx-auto">
+        <section class="py-10 space-y-3 flex justify-center items-center gap-5">
+            <p class="md:w-2/3 text-justify leading-relaxed"> <b>Sadati Photography</b> merupakan studio yang didirikan pada tahun 2020. yang merupakan rebrand dari Handoko Photo Studio. Handoko Photo Studio merupakan studio yang didirikan tahun 1986.
+                Kemudian pada tahun 2020, Handoko Photo Studio terpaksa ditutup selama empat bulan karena pandemi Virus Corona, dimana Dhimas Galih Sadati berinisiatif ingin membuka Studio Photo tersebut lagi dan melakukan perombakan Studio dan merubahnya menjadi Sadati Photography newborn Handoko Photo Studio. Nama Sadati Photography bukanlah nama baru, melainkan merupakan
+                sebuah Studio Photo yang dikelola oleh Dhimas Galih Sadati sendiri yang sudah ada sejak 2012 dan merupakan sebuah Wedding Organizer atau WO yang pernah berkolaborasi dengan New Day Wedding Organizer sejak 2013, Sadati Photography dengan bisnis model bersifat Online tanpa kantor yang dikususkan untuk prewedding dan wedding.
+                Berbeda dengan yang dijogja, Sadati Photography di Nanggulan memiliki kantor dan Studio sendiri yang menerima bukan cuman prewedding dan wedding tetapi juga foto wisuda, foto keluarga, maternity, foto group. 
+                </p>
+            </section>
+            
+            <section class="py-10 gap-2 grid sm:grid-cols-2 md:grid-cols-3 w-full md:w-2/3 mx-auto">
             <img class="object-cover w-full" src="images/sadati/img-0.jpg" alt="">
             <img class="object-cover w-full" src="images/sadati/img-1.jpg" alt="">
             <img class="object-cover w-full" src="images/sadati/img-2.jpg" alt="">
