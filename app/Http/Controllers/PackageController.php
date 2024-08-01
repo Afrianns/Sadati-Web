@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\Package;
 use Illuminate\Http\Request;
 
@@ -100,12 +101,17 @@ class PackageController extends Controller
 
     public function deletePackage(Request $request)
     {
-        $result = Package::where('id', request('package_id'))->delete();
 
-        if($result){
-            toast('Berhasil Menghapus Paket','success');
+        $data = Booking::where("package_id", request('package_id'))->get();
+        if(count($data) <= 0){
+            $result = Package::where('id', request('package_id'))->delete();
+            if($result){
+                toast('Berhasil Menghapus Paket','success');
+            } else{
+                toast('Gagal Menghapus Paket','error');
+            }
         } else{
-            toast('Gagal Menghapus Paket','error');
+            toast(' <b> Maaf, tidak bisa mengahapus paket</b> <br> paket digunakan oleh pelanggan','error');
         }
 
         return redirect('/admin/packages');

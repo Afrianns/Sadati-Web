@@ -49,7 +49,7 @@
                 <div class="bg-white px-2 border border-gray-300 absolute -left-6 top-8" x-show="open" x-on:click.outside="open = false" x-cloak>
                     <form action="/logout" method="POST">
                         @csrf
-                        <button class="block px-4 py-2 text-sm text-gray-700">logout</button>
+                        <button class="block px-4 py-2 text-sm text-red-500">logout</button>
                     </form>
                     </div>
                 </div>

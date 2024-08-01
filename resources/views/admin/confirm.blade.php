@@ -53,7 +53,6 @@
                         <tr>
                             <td class="pr-5 text-gray-500 font-light">Jenis Paket</td>
                             <td> 
-                                
                                 <span class="uppercase">{{ $book->package->type }}</span>
                                 @if($book->package->category == 'lain-lain')
                                     -
@@ -67,7 +66,7 @@
                         
                         <tr>
                             <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
-                            <td class="pb-2"> IDR {{ $formatter->formatCurrency($book->package->price, 'IDR') }}</td>
+                            <td class="pb-2"> {{ $formatter->formatCurrency($book->price, 'IDR') }}</td>
                         </tr>
                         {{-- <tr>
                             <td class="py-1 bg-gray-50 text-center text-sm" colspan="2">Waktu & Tempat</td>

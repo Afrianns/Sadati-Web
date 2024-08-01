@@ -1,6 +1,7 @@
 <x-user.layout :title='$title'>
     @php
         $formatter = new NumberFormatter('id_ID',  NumberFormatter::CURRENCY);
+        $id = 0;
     @endphp
     <x-header-page></x-header-page>
     <div class="flex justify-center items-center lg:items-start pt-32 py-20 lg:flex-row flex-col w-full gap-10">
@@ -96,13 +97,15 @@
                 <thead class="text-xs text-white uppercase bg-secondary py-10">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            Jenis
+                            Nama
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Tanggal & Waktu
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Status
+                        </th>
+                        <th scope="col" class="px-6 py-3">
                         </th>
                         <th scope="col" class="px-6 py-3">
                         </th>
@@ -115,54 +118,90 @@
                     }
                 @endphp
                 @foreach ($bookings as $book)
-                <tbody class="border-[#f0f0f0] border-y-8" x-data="{ expand: false }">
-                    @if ($book->isConfirmed || $book->admin_note)
-                        <tr class="bg-white hover:bg-gray-50 cursor-pointer" x-on:click="expand = !expand">
-                    @else
-                        <tr class="bg-white hover:bg-gray-50">
-                    @endif
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 align-top">
-                                {{ Auth::user()->name}}
+                <tbody class="border-[#f0f0f0] border-y-8">
+                    <tr class="bg-white hover:bg-gray-50">
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 align-top">
+                            {{ Auth::user()->name}}
+                        </td>
+                        <td class="px-6 py-4 align-top">
+                            {{ getDateTime($book->date . $book->time)->diffForHumans() }}
+                        </td>
+                        @if(!$book->isFinished)
+                            <td class="px-6 py-4 align-top">
+                                @if (is_null($book->isConfirmed))
+                                    <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">menuggu konfirmasi</span>
+                                @elseif ($book->isConfirmed)
+                                    <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terkonfirmasi</span>
+                                @else
+                                    <span class="bg-red-200 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">ditolak</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 align-top">
-                                {{ getDateTime($book->date . $book->time)->diffForHumans() }}
-                            </td>
-                            @if(!$book->isFinished)
-                                <td class="px-6 py-4 align-top">
-                                    @if (is_null($book->isConfirmed))
-                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">menuggu konfirmasi</span>
-                                    @elseif ($book->isConfirmed)
-                                        <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terkonfirmasi</span>
-                                    @else
-                                        <span class="bg-red-200 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">ditolak</span>
-                                    @endif
-                                </td>
-                                <td class="text-left">
-                                    @if (!$book->isConfirmed)
-                                        <x-confirmation-warning action="/booking" method="POST" title="Hapus Booking">
+                                @if ($book->isConfirmed)
+                                    @if(!$book->payment)
+                                        <form action="" method="post">
                                             @csrf
-                                            @method('delete')
-                                            <input hidden name="booking_id" value='{{ $book->id }}' id="">
-                                            <button class="clickable text-red-500 hover:underline">Hapus</button>
-                                        </x-confirmation-warning>
+                                            <button class="clickable text-purple-500 hover:underline" x-on:click.prevent="snapPayment('{{ $book->token }}','{{ $book->id }}')">
+                                                Bayar
+                                            </button>
+                                        </form>
                                     @else
-                                    {{-- {{ $book }} --}}
-                                        @if(!$book->payment)
-                                            <form action="" method="post">
-                                                @csrf
-                                                <button class="clickable text-blue-500 hover:underline" x-on:click.prevent="snapPayment('{{ $book->token }}','{{ $book->id }}')">
-                                                    Bayar
-                                                </button>
-                                            </form>
-                                        @else
                                         <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">terbayar</span>
-                                        @endif
                                     @endif
-                                </td>
-                            @else
-                                <td class="px-6 py-4 align-top">
-                                    <p>Booking ditutup</p>
-                                </td>
+                                @endif
+                            </td>
+                        @else
+                            <td class="px-6 py-4 align-top">
+                                <p>Booking ditutup</p>
+                            </td>
+                            <td class="px-6 py-4 align-top"></td>
+                        @endif
+                        <td class="border-t-2 border-secondary">
+                            <p class="clickable text-blue-600 hover:underline cursor-pointer" x-on:click="showDetail({{ $book->id }})">Detail</p>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+                @endforeach
+            </table>
+            {{ $bookings->links('pagination::tailwind') }}
+        </div>
+        <div class="bg-gray-300/50 fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center" x-show="expand" x-on:click="showDetail" x-cloak>
+            @foreach($bookings as $book)
+                <section x-show="{{ $book->id }} == id">
+                    <div class="bg-white py-5 px-4 w-fit h-fit rounded-md">
+                        <h2 class="font-semibold my-3">Detail Booking</h2>
+                        <table class="space-y-3">
+                            <tr>
+                                <td class="pb-2 pr-5 text-gray-500 font-light">Harga</td>
+                                <td class="pb-2">{{ $formatter->formatCurrency($book->price, 'IDR') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pb-2 pr-5 text-gray-500 font-light">Tipe</td>
+                                <td class="pb-2">{{ $book->package->category }} - {{ $book->package->type }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pb-2 pr-5 text-gray-500 font-light">Tempat Acara</td>
+                                <td class="pb-2">{{ $book->place }}</td>
+                            </tr>
+                            <tr>
+                                <td class="pb-2 pr-5 text-gray-500 font-light">Tanggal dan Waktu</td>
+                                <td class="pb-2">{{ getDateTime($book->date)->isoFormat('D MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }}</td>
+                            </tr>
+                            @if ($book->isConfirmed)
+                                @if($book->admin_note)
+                                    <tr>
+                                        <td class="pb-2 pr-5 text-gray-500 font-light">Catatan dari Admin</td>
+                                        <td class="pb-2">{{ $book->admin_note }}</td>
+                                    </tr>
+                                @endif
+                                @if($book->payment)
+                                    <td class="pb-2 pr-5 text-gray-500 font-light inline-block">
+                                        <a class="clickable text-green-600 hover:underline" href="/storage/{{ $book->payment->file_name }}">Lihat Nota</a>
+                                    </td>
+                                @endif
+                            @endif
+                            @if($book->isFinished || !$book->isConfirmed)
                                 <td>
                                     <x-confirmation-warning action="/booking" method="POST" title="Hapus Booking">
                                         @csrf
@@ -172,44 +211,10 @@
                                     </x-confirmation-warning>
                                 </td>
                             @endif
-                        </tr>
-                    @if ($book->isConfirmed)
-                        <tr class="bg-white border-b-8 border-[#F0F0F0]" x-show="expand" x-cloak>
-                            <td class="border-t-2 border-secondary p-4">
-                                <span class="font-bold">Tempat Acara</span> <p>{{ $book->place }}</p>
-                            </td>
-                            <td class="border-t-2 border-secondary py-4">    
-                                <span class="font-bold">Tanggal & Waktu Acara</span> <p class="bg-gray-100 w-fit py-1 px-4 my-1">{{ getDateTime($book->date)->isoFormat('D MMMM Y') }} - {{ getDateTime($book->time)->isoFormat('HH:mm') }}</p>
-                            </td>
-                            @if($book->admin_note)
-                                <td class="border-t-2 border-secondary">
-                                    <span class="text-gray-500 text-sm">Catatan dari admin:</span>
-                                    <p>{{ $book->admin_note }}</p>
-                                </td>
-                            @else
-                                <td class="border-t-2 border-secondary"></td>
-                            @endif
-                            @if($book->payment)
-                                <td class="border-t-2 border-secondary">
-                                    <a class="clickable text-green-600 hover:underline" href="/storage/{{ $book->payment->file_name }}">Lihat Nota</a>
-                                </td>
-                            @else
-                                <td class="border-t-2 border-secondary"></td>
-                            @endif
-                        </tr>
-                    @elseif($book->admin_note)
-                        <tr class="bg-white border-b-8 border-[#F0F0F0]" x-show="expand" x-cloak>
-                            <td class="border-t-2 p-4 border-secondary">
-                                <span class="text-gray-500 text-sm">Catatan dari admin:</span>
-                                <p>{{ $book->admin_note }}</p>
-                            </td>
-                            <td colspan="3" class="border-t-2 p-4 border-secondary"></td>
-                        </tr>
-                    @endif
-                </tbody>
-                @endforeach
-            </table>
-            {{ $bookings->links('pagination::tailwind') }}
+                        </table>
+                    </div>
+                </section>
+            @endforeach
         </div>
     </section>
     @endif

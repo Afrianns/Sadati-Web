@@ -54,6 +54,8 @@ class BookingController extends Controller
     // create booking data by users
     public function create(Request $request) {
 
+        $data = Package::find($request->package);
+
         $res = $request->validate([
             'date' => ['required'],
             'time' => ['required'],
@@ -61,13 +63,13 @@ class BookingController extends Controller
             'package' => ['required']
         ]);
 
-        // dd($res, request('package'), $res['package']);
         
         Booking::create([
             'user_id' => auth()->user()->id,
             'package_id' => $res['package'],
             'date' => $res['date'],
             'time' => $res['time'],
+            'price' => $data->price,
             'place' => $res['place'],
             'note' => $request->note
         ]);

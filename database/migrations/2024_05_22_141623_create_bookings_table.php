@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Package::class);
+            $table->string('price');
             $table->date('date');
             $table->time('time');
             $table->boolean('isConfirmed')->nullable();

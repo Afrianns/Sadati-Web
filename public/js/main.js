@@ -1,5 +1,13 @@
 document.addEventListener("alpine:init", () => {
     Alpine.data("payment", () => ({
+        expand: false,
+        id: 0,
+
+        showDetail(param) {
+            this.id = param
+            this.expand = !this.expand;
+        },
+
         snapPayment(snap_key, id) {
             window.snap.pay(snap_key, {
                 onSuccess: function (result) {

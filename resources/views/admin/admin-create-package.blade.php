@@ -13,7 +13,7 @@
                 <div class="sm:col-span-3 mr-2">
                     <label for="text" class="block text-sm font-medium leading-6 text-gray-900">Tipe</label>
                     <div class="mt-2">
-                        <input type="text" name="type" id="type" class="input-styles" placeholder="e.g. Bronze, Gold, Silver">
+                        <input type="text" name="type" id="type" class="input-styles" placeholder="e.g. Bronze, Gold, Silver" required>
                     </div>
                 </div>
                 <div class="sm:col-span-3">
@@ -25,13 +25,13 @@
             </div>
             <div class="mt-5">
                 <label for="place" class="block text-sm mb-2 font-medium leading-6 text-gray-900">Harga</label>
-                <input type="number" id="message" rows="4" name="price" class="input-styles" placeholder="Masukan harga paket...">
+                <input type="number" id="message" min="0" rows="4" name="price" class="input-styles" placeholder="Masukan harga paket..." required>
             </div>
             <div class="mt-5 space-y-3">
                 <label for="desc">Keunggulan Paket</label> 
                 <template x-for="(field, index) in fields" :key="index">
                     <div class="flex gap-x-5 items-center">
-                        <input type="text" name="desc[]" class="input-styles" x-model="field.value"></input> 
+                        <input type="text" name="desc[]" class="input-styles" x-model="field.value" required></input> 
                         <span x-show="index>=1" x-on:click='removeField(index)' class="clickable-styles bg-red-500 text-white rounded-full px-3">&times;</span>
                     </div>
                 </template>
