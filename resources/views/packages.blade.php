@@ -13,7 +13,7 @@
                         <p class="text-white font-light text-xs bg-secondary py-1 px-2">{{ $package->sub_type }}</li>
                     @endif
                     <h2 class="font-bold font-Mohave text-secondary text-2xl uppercase">{{ $package->type }}</h2>
-                    <span class="text-gray-500">IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
+                    <span class="text-gray-500">{{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
                 </div>
                 <div class="space-y-1 text-gray-700">
                     <ul class="list-disc ml-5">
@@ -39,7 +39,7 @@
                 @endif
                 <div class="mb-5 bg-gray-100 py-1 px-2">
                     <h2 class="font-bold font-Mohave text-secondary text-2xl uppercase">{{ $package->type }}</h2>
-                    <span class="text-gray-500">IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
+                    <span class="text-gray-500">{{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
                 </div>
                 <div class="space-y-1 text-gray-700">
                     <ul class="list-disc ml-5">
@@ -66,7 +66,7 @@
                 @endif
                 <div class="mb-5 bg-gray-100 py-1 px-2">
                     <h2 class="font-bold font-Mohave text-secondary text-2xl uppercase">{{ $package->type }}</h2>
-                    <span class="text-gray-500">IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
+                    <span class="text-gray-500">{{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
                 </div>
                 <div class="space-y-1 text-gray-700">
                     <ul class="list-disc ml-5">

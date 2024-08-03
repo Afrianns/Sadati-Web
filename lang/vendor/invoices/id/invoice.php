@@ -7,12 +7,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'invoice'                => 'Nota Pembelian',
+    'invoice'                => 'Nota Pembayaran',
     'serial'                 => 'Nomor Serial',
-    'date'                   => 'Tanggal',
+    'date'                   => 'Tanggal Dibuat',
     'seller'                 => 'Penjual',
-    'buyer'                  => 'Pembeli',
-    'address'                => 'Alamant',
+    'buyer'                  => 'Pelanggan',
+    'address'                => 'Alamat',
     'code'                   => 'Kode',
     'vat'                    => 'DPH',
     'phone'                  => 'Nomor Telepon',

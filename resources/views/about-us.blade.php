@@ -11,10 +11,10 @@
         </section>
 
         <section class="py-10 space-y-3 flex justify-center items-center gap-5">
-            <p class="md:w-2/3 text-justify leading-relaxed"> <b>Sadati Photography</b> merupakan studio yang didirikan pada tahun 2020. yang merupakan rebrand dari Handoko Photo Studio. Handoko Photo Studio merupakan studio yang didirikan tahun 1986.
-                Kemudian pada tahun 2020, Handoko Photo Studio terpaksa ditutup selama empat bulan karena pandemi Virus Corona, dimana Dhimas Galih Sadati berinisiatif ingin membuka Studio Photo tersebut lagi dan melakukan perombakan Studio dan merubahnya menjadi Sadati Photography newborn Handoko Photo Studio. Nama Sadati Photography bukanlah nama baru, melainkan merupakan
+            <p class="md:w-2/3 text-justify leading-relaxed"> <b>Sadati Photography</b> merupakan studio yang didirikan pada tahun 2020. Yang merupakan rebrand dari Handoko Photo Studio. Handoko Photo Studio merupakan studio yang didirikan tahun 1986.
+                Kemudian pada tahun 2020, <b> Handoko Photo Studio</b> terpaksa ditutup selama empat bulan karena pandemi Virus Corona, dimana Dhimas Galih Sadati berinisiatif ingin membuka Studio Photo tersebut lagi dan melakukan perombakan Studio dan merubahnya menjadi Sadati Photography newborn Handoko Photo Studio. Nama Sadati Photography bukanlah nama baru, melainkan merupakan
                 sebuah Studio Photo yang dikelola oleh Dhimas Galih Sadati sendiri yang sudah ada sejak 2012 dan merupakan sebuah Wedding Organizer atau WO yang pernah berkolaborasi dengan New Day Wedding Organizer sejak 2013, Sadati Photography dengan bisnis model bersifat Online tanpa kantor yang dikususkan untuk prewedding dan wedding.
-                Berbeda dengan yang dijogja, Sadati Photography di Nanggulan memiliki kantor dan Studio sendiri yang menerima bukan cuman prewedding dan wedding tetapi juga foto wisuda, foto keluarga, maternity, foto group. 
+                Berbeda dengan yang di Yogyakarta, Sadati Photography di Nanggulan memiliki kantor dan Studio sendiri yang menerima bukan cuman prewedding dan wedding tetapi juga foto wisuda, foto keluarga, maternity, foto group. 
                 </p>
             </section>
             

@@ -9,7 +9,7 @@
             <h2 class="font-Mohave text-4xl font-bold uppercase">
                 RESERVASI
             </h2>
-            <p class="text-gray-300 mt-5">Masukan formulir data tempat, tanggal, waktu, dan tipe paket yang akan dipakai.</p>
+            <p class="text-gray-300 mt-5">Masukan formulir data tempat, tanggal, waktu, dan tipe paket yang akan dipakai. Jika memiliki pertanyaan atau kebutuhan lain bisa hubungi kami di nomor dibawah.</p>
         </div>
         <div class="bg-white w-4/5 lg:w-2/5 h-fit px-6 py-7 shadow-md">
             @if(Auth::guest())
@@ -166,10 +166,10 @@
             </table>
             {{ $bookings->links('pagination::tailwind') }}
         </div>
-        <div class="bg-gray-300/50 fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center" x-show="expand" x-on:click="showDetail" x-cloak>
+        <div class="bg-gray-300/50 fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center" x-show="expand"  x-cloak>
             @foreach($bookings as $book)
                 <section x-show="{{ $book->id }} == id">
-                    <div class="bg-white py-5 px-4 w-fit h-fit rounded-md">
+                    <div class="bg-white py-5 px-4 w-fit h-fit rounded-md" x-on:click.outside="showDetail">
                         <h2 class="font-semibold my-3">Detail Booking</h2>
                         <table class="space-y-3">
                             <tr>
