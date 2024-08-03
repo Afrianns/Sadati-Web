@@ -1,7 +1,6 @@
 <x-user.layout :title='$title'>
     @php
         $formatter = new NumberFormatter('id_ID',  NumberFormatter::CURRENCY);
-        $id = 0;
     @endphp
     <x-header-page></x-header-page>
     <div class="flex justify-center items-center lg:items-start pt-32 py-20 lg:flex-row flex-col w-full gap-10">
