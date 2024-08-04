@@ -10,6 +10,8 @@ use Midtrans\Snap;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
+use App\Mail\FileUploaded;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Gate;
 
@@ -175,16 +177,7 @@ class BookingController extends Controller
 
     public function history()
     {
-
-        // check if parameter if exist or not
-        // if(!isset($_GET['Ptype'])){
-        //     $type = 'paid';
-        // } else{
-        //     $type = $_GET['Ptype'];
-        // }
-
         $result = Booking::where("isFinished", true)->orWhere("isConfirmed", false);
-
         return view('admin/history', ['title' => "Riwayat",'completedBooks' => $result->get()]);
     }
 
@@ -212,7 +205,7 @@ class BookingController extends Controller
 
         if($result) {
             if(request('value') == 1) {
-                toast("berhasil diterima", 'success');  
+                toast("berhasil diterima", 'success');
                 return redirect('admin/confirmed');
             } else if(request('value') == 0){
                 toast("berhasil ditolak", 'success');  
@@ -222,6 +215,58 @@ class BookingController extends Controller
 
         toast("Proses konfirmasi gagal", 'error');   
         return redirect('admin/confirm');
+    }
+
+    // upload files zip
+    public function upload_file(Request $request){
+        $res = $request->file('file');
+
+        // check if file is "zip" format
+        if($res->extension() == "zip"){
+
+            // update file name & upload file
+            $name = $res->hashName();
+            Booking::where('id' ,$request->booking_id)->update([
+                'file_name' => $name
+            ]);
+            $res->store('public/files');
+
+            // send notification mail to user
+            $user = User::find($request->user_id);
+            Mail::to($user->email)->send(new FileUploaded($user->name, $name));
+
+            // success message
+            toast("Berhasil diunggah", 'success');
+            return redirect('admin/confirmed');
+
+        } else{
+            // redirect if not "zip" format
+            toast("File harus berformat zip", 'error');
+            return redirect('admin/confirmed');
+        }
+    }
+
+    public function file_delete(Request $request){
+        $result = Booking::find($request->booking_id);
+
+       if(File::exists("storage/files/" . $result->file_name)){
+
+           $res = File::delete("storage/files/" . $result->file_name);
+           if($res){
+                Booking::where('id' ,$request->booking_id)->update([
+                    'file_name' => null
+                ]);
+                toast("File berhasil dihapus", 'success');
+                return redirect('admin/confirmed');
+            } else{
+               toast("File gagal dihapus", 'error');
+               return redirect('admin/confirmed');
+            }
+        }
+
+        toast("File tidak ada", 'error');
+        return redirect('admin/confirmed');
+
     }
 
     // controller delete for user if not yet confirmed or rejected (cannot delete if its already accepted)
@@ -235,6 +280,9 @@ class BookingController extends Controller
             if(File::exists("storage/" . $result->payment->file_name)){
                 File::delete("storage/" . $result->payment->file_name);
             }
+        }
+        if(File::exists("storage/files/" . $result->file_name)){
+            $res = File::delete("storage/files/" . $result->file_name);
         }
         
         // delete the booking

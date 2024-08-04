@@ -120,18 +120,50 @@
                                 <td class="pt-7 pr-5 text-gray-500 font-light">Diajukan pada</td>
                                 <td class="pt-7 flex items-center gap-2">{{ getDateTime($book->created_at)->format("j F Y") }} <span class="text-xs text-gray-500 bg-gray-200 py-0.5 px-1.5">{{ getDateTime($book->created_at)->diffForHumans(now()) }}</span> </td>
                             </tr>
+                            @if ($book->file_name)
+                            <tr>
+                                <td class="pt-7 pr-5 text-gray-500 font-light">
+                                    Nama file
+                                </td>
+                                <td class="pt-7">
+                                    <div class="flex py-1 px-2 items-center border border-gray-200 gap-x-2">
+                                        <span>
+                                            {{ $book->file_name }} 
+                                        </span>
+                                        <x-confirmation-warning action="/admin/file/delete" method="POST" title="Hapus File" text="Apa kamu yakin ingin menghapus -nya?">
+                                            @csrf
+                                            @method('delete')
+                                            <input type="hidden" name="booking_id" value="{{ $book->id }}">
+                                            <button class="text-red-500 hover:underline">hapus</button>
+                                        </x-confirmation-warning>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endif
                         </table>
-
+                        @if ($book->payment)
+                            @if (!$book->file_name)
+                                <div class="mt-10 flex flex-col content-center flex-wrap">
+                                    <form action="/admin/files" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('patch')
+                                        <input type="hidden" name="user_id" value="{{ $book->user_id }}">
+                                        <input type="hidden" name="booking_id" value="{{ $book->id }}">
+                                        <input type="file" name="file" class="block w-full text-sm text-slate-500 border border-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100">
+                                        <button type="submit" class="w-full text-white bg-green-500 border border-white mt-3 py-1 px-2">upload</button>
+                                    </form>
+                                </div>
+                            @endif
+                        @endif
                         <x-confirmation-warning action="/admin/history" method="POST" title="Tutup Booking" text="Apa kamu yakin ingin Menutup -nya?">
                             @csrf
                             @method('patch')
                             <input type="hidden" name="booking_id" value="{{ $book->id }}">
                             <input type="hidden" name="admin_note" value="">
-                            <button class="bg-red-500 text-white py-1 px-4 mt-5">Tutup</button>
+                            <button class="text-red-500 mt-7 hover:underline">tutup</button>
                         </x-confirmation-warning>
                     </div>
                 </section>
-            {{-- </div> --}}
         @endforeach
         @else
             <h1 class="text-center font-Mohave text-gray-600 py-10">Ooops.. Tidak Ada yang Booking Terkonfirmasi disini.</h1>

@@ -78,6 +78,9 @@ Route::prefix('admin')->controller(BookingController::class)->group(function() {
     Route::get('/history', 'history');
     Route::patch('/booking', 'Confirmation');
     Route::get('/', 'index');
+
+    Route::patch("/files", "upload_file");
+    Route::delete('/file/delete', 'file_delete');
 })->middleware(admin::class);
 
 

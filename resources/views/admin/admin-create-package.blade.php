@@ -1,5 +1,5 @@
 <x-admin.admin-layout :title="$title">
-    <div x-data="createPackage()">
+    <div x-data="createPackage()" class="bg-white py-4 px-5 border border-gray-300 shadow-sm mb-5">
         @foreach ($errors->all() as $error)
             <div class="text-red-600 my-5">
                 <ul class="list-styles py-0 my-0">
@@ -25,13 +25,16 @@
             </div>
             <div class="mt-5">
                 <label for="place" class="block text-sm mb-2 font-medium leading-6 text-gray-900">Harga</label>
-                <input type="number" id="message" min="0" rows="4" name="price" class="input-styles" placeholder="Masukan harga paket..." required>
+                <div class="flex gap-x-2 items-center">
+                    <p>Rp.</p>
+                    <input type="number" id="message" min="0" rows="4" name="price" class="input-styles" placeholder="E.g. 10000" required>
+                </div>
             </div>
             <div class="mt-5 space-y-3">
                 <label for="desc">Keunggulan Paket</label> 
                 <template x-for="(field, index) in fields" :key="index">
                     <div class="flex gap-x-5 items-center">
-                        <input type="text" name="desc[]" class="input-styles" x-model="field.value" required></input> 
+                        <input type="text" name="desc[]" class="input-styles" x-model="field.value" required placeholder="Masukan keunggulan paket"></input> 
                         <span x-show="index>=1" x-on:click='removeField(index)' class="clickable-styles bg-red-500 text-white rounded-full px-3">&times;</span>
                     </div>
                 </template>

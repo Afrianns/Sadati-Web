@@ -78,6 +78,16 @@
                                     <td class="pt-5">{{ $book->admin_note }}</td>
                                 </tr>
                             @endif
+                            @if ($book->file_name)
+                            <tr>
+                                <td class="pt-7 pr-5 text-gray-500 font-light">
+                                    Nama file
+                                </td>
+                                <td class="pt-7">
+                                    {{ $book->file_name }}
+                                </td>
+                            </tr>
+                            @endif
                         </table>
                         <x-confirmation-warning action="/booking" method="POST" title="Hapus Booking">
                             @csrf

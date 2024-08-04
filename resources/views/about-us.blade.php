@@ -1,15 +1,10 @@
 <x-user.layout :title='$title'>
-    <div class="mx-2 sm:mx-5 md:mx-10 text-gray-800">
-        <section class="h-[18rem] relative flex max-md:flex-col-reverse items-center w-full bg-black border-x-4 border-secondary">
-            <div class="absolute ml-2 px-5 w-full max-md:py-16 space-y-7 lg:space-y-7 z-10">
-                <h3 class="font-Mohave text-4xl font-bold uppercase py-10 text-center text-white">
-                    Tentang Kami, Sadati Photography. 
-                </h3>
-            </div>
-            <img class="bg-red-50 w-full h-full object-cover" src="images/image01.jpg" alt="">    
-        <span class="bg-black absolute left-0 right-0 bottom-0 top-0 opacity-70"></span>
-        </section>
-
+    <x-header-page></x-header-page>
+    <h3 class="font-Mohave text-4xl font-bold uppercase py-40 text-center text-white">
+        Tentang Kami, Sadati Photography. 
+    </h3>
+    
+    <div class=" text-gray-800 mx-2 sm:mx-5 md:mx-10">
         <section class="py-10 space-y-3 flex justify-center items-center gap-5">
             <p class="md:w-2/3 text-justify leading-relaxed"> <b>Sadati Photography</b> merupakan studio yang didirikan pada tahun 2020. Yang merupakan rebrand dari Handoko Photo Studio. Handoko Photo Studio merupakan studio yang didirikan tahun 1986.
                 Kemudian pada tahun 2020, <b> Handoko Photo Studio</b> terpaksa ditutup selama empat bulan karena pandemi Virus Corona, dimana Dhimas Galih Sadati berinisiatif ingin membuka Studio Photo tersebut lagi dan melakukan perombakan Studio dan merubahnya menjadi Sadati Photography newborn Handoko Photo Studio. Nama Sadati Photography bukanlah nama baru, melainkan merupakan

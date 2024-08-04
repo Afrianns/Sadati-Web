@@ -20,20 +20,24 @@
     @apply block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:underline;
 }
 
+.navlink-btn{
+    @apply rounded flex items-center gap-x-2 px-4 py-2 text-sm;
+}
+
 /* packages lists home styles */
 .img-style {
     @apply group-hover:scale-105 transition ease-in-out duration-300 object-cover w-full h-full;
 }
 
 .gradient-ornament {
-    @apply before:absolute before:before:absolute before:bg-gradient-to-t from-[#030303e0] before:bottom-0 before:left-0 before:right-0 before:h-48 before:z-10;
+    @apply before:absolute before:bg-gradient-to-t from-[#030303e0] before:bottom-0 before:left-0 before:right-0 before:h-48 before:z-10;
 }
 
 .info-wrapper {
     @apply absolute bottom-10 left-5 right-0 z-20 translate-x-0 lg:translate-y-2/3 lg:group-hover:translate-y-0;
 }
 .info-title {
-    @apply font-Mohave font-bold text-4xl border-b border-gray-300 w-full py-2 group-hover:text-secondary;
+    @apply font-Mohave font-bold text-4xl border-b border-gray-300 w-full py-2;
 }
 
 .description {

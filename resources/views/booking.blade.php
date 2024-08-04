@@ -79,7 +79,7 @@
                 </div>
                 @can('authNoAdmin')
                     @if(Auth::user()->email_verified_at)
-                        <button class="button-styles">BOOK</button>
+                        <button class="button-styles">KIRIM</button>
                         </form>
                         <p class="text-sm text-gray-500 font-light mt-5"> <span class="font-semibold">Catatan</span> : pastikan data yang dimasukan sesuai!</p>
                     @endif
@@ -198,6 +198,12 @@
                                     <td class="pb-2 pr-5 text-gray-500 font-light inline-block">
                                         <a class="clickable text-green-600 hover:underline" href="/storage/{{ $book->payment->file_name }}">Lihat Nota</a>
                                     </td>
+
+                                    @if ($book->file_name)
+                                    <td class="pb-2 pr-5 text-gray-500 font-light inline-block">
+                                        <a class="clickable text-green-600 hover:underline" href="/storage/files/{{ $book->file_name }}">Unduh File</a>
+                                    </td>
+                                    @endif
                                 @endif
                             @endif
                             @if($book->isFinished || !$book->isConfirmed)

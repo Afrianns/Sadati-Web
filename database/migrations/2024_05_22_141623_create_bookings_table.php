@@ -20,12 +20,13 @@ return new class extends Migration
             $table->string('price');
             $table->date('date');
             $table->time('time');
+            $table->text('place');
+            $table->string('token')->unique()->nullable();
             $table->boolean('isConfirmed')->nullable();
             $table->boolean('isFinished')->nullable();
-            $table->string('token')->unique()->nullable();
-            $table->text('place');
             $table->text('note')->nullable();
             $table->text('admin_note')->nullable();
+            $table->text('file_name')->nullable();
             $table->timestamps();
         });
     }
