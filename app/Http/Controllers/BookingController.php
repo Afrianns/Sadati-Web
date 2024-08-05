@@ -219,6 +219,11 @@ class BookingController extends Controller
 
     // upload files zip
     public function upload_file(Request $request){
+        if($request->file('file') == null){
+            toast("Masukan file terlebih dahulu", 'error');
+            return redirect('admin/confirmed');
+        }
+        
         $res = $request->file('file');
 
         // check if file is "zip" format

@@ -147,9 +147,9 @@
                                     <form action="/admin/files" method="post" enctype="multipart/form-data">
                                         @csrf
                                         @method('patch')
-                                        <input type="hidden" name="user_id" value="{{ $book->user_id }}">
-                                        <input type="hidden" name="booking_id" value="{{ $book->id }}">
-                                        <input type="file" name="file" class="block w-full text-sm text-slate-500 border border-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100">
+                                        <input type="hidden" name="user_id" value="{{ $book->user_id }}" required>
+                                        <input type="hidden" name="booking_id" value="{{ $book->id }}" required>
+                                        <input type="file" name="file" class="block w-full text-sm text-slate-500 border border-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" required>
                                         <button type="submit" class="w-full text-white bg-green-500 border border-white mt-3 py-1 px-2">upload</button>
                                     </form>
                                 </div>
@@ -160,7 +160,7 @@
                             @method('patch')
                             <input type="hidden" name="booking_id" value="{{ $book->id }}">
                             <input type="hidden" name="admin_note" value="">
-                            <button class="text-red-500 mt-7 hover:underline">tutup</button>
+                            <button class="text-red-500 mt-7 hover:underline">Tutup</button>
                         </x-confirmation-warning>
                     </div>
                 </section>

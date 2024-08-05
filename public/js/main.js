@@ -4,7 +4,7 @@ document.addEventListener("alpine:init", () => {
         id: 0,
 
         showDetail(param) {
-            this.id = param
+            this.id = param;
             this.expand = !this.expand;
         },
 
@@ -53,7 +53,6 @@ document.addEventListener("alpine:init", () => {
                 },
                 onPending: function (result) {
                     console.log(result.error_messages);
-                    alert("gagal");
                 },
                 onError: function (result) {
                     console.log(result);

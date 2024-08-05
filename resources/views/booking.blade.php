@@ -48,7 +48,7 @@
                                         {{ $package->category }}
                                         -
                                     @endif
-                                     IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</option>
+                                     {{ $formatter->formatCurrency($package->price, 'IDR') }}</option>
                             @endforeach
                         </select>
                     </div>

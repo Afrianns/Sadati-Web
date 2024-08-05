@@ -39,7 +39,7 @@
     <div class="border border-gray-300 rounded-md mb-5 bg-gray-50 shadow-sm">
         <div class="w-fit ml-auto">
             <x-confirmation-warning action="/admin/package/delete" method="POST" title="Hapus Paket" text="Apa kamu yakin ingin menghapus paket -nya?">
-                   @csrf
+                @csrf
                @method("delete")
                <input type="hidden" name="package_id" value="{{ $package->id }}">
                <button class="text-red-500 py-1 px-4 hover:underline">Hapus</button>
@@ -56,9 +56,8 @@
                         <input type="text" x-show="edit" x-cloak class="input-styles mb-2" name="type-edit" value="{{ $package->type }}"></input> 
                         {{-- price --}}
                         <input type="number" x-show="edit" x-cloak class="input-styles" name="price-edit" value="{{ $package->price }}"></input> 
-                        <span class="text-gray-500" x-show="!edit">IDR {{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
+                        <span class="text-gray-500" x-show="!edit">{{ $formatter->formatCurrency($package->price, 'IDR') }}</span>
                     </div>
-
                     <svg x-on:click="open = !open, edit = false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-black w-9 p-2 cursor-pointer hover:bg-gray-50"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
                 </div>
                 <div x-cloak x-show="open">
@@ -66,7 +65,6 @@
                         <p class="mt-3" x-show="!edit">{{ $package->sub_type }}</p>
                         <input type="text" x-show="edit" x-cloak class="input-styles mt-2" name="sub_type_edit" value="{{ $package->sub_type }}"></input>
                     @endif
-                    
                         <ul class="list-styles my-5">
                         <template x-for="(field, index) in fields" :key="index">
                             <li>

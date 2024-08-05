@@ -43,7 +43,7 @@
                             <tr>
                                 <td class="pb-2 pr-5 text-gray-500 font-light">Harga Paket</td>
                                 <td class="pb-2"> 
-                                    IDR {{ $formatter->formatCurrency($book->package->price, 'IDR') }}
+                                    {{ $formatter->formatCurrency($book->package->price, 'IDR') }}
                                     @if($book->isConfirmed)
                                         @if($book->payment)
                                             <span class="bg-green-200 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded w-full">sudah dibayar</span>
